@@ -87,7 +87,7 @@ return (
 );
 ```
 
-The reasons for this become abundantly clear when we take a look at the compiled output for the above code sample. This
+The reason for this becomes abundantly clear when we take a look at the compiled output for the above code sample. This
 is the same code, but compiled down to regular JS:
 
 ```js
