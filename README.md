@@ -331,6 +331,7 @@ to run `npm run bundle` any time you want to compile your changes and view them 
 - [Browserify][browserify]
 - [Babel](http://babeljs.io/)
 - [Babelify][babelify]
+- [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html)
 
 [browserify]: https://github.com/substack/node-browserify
 [babelify]: https://github.com/babel/babelify
