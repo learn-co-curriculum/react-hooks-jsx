@@ -55,7 +55,7 @@ It's an angry mob! We're mixing HTML and JS! We've created an abomination! _Blas
 Believe it or not (especially after seeing how cool JSX is), but some developers _despise_ using JSX. They think mixing
 languages like this is something that should never be done. However, if you give it a little bit of time, you'll soon
 notice that the benefits far outweigh the (imaginary) cost of writing HTML in your JS. We've been doing it all along in
-the front-end using strings, this is just easier! UI code and components is usually tightly intertwined with the
+the front-end using strings, this is just easier! Our component code is usually tightly intertwined with the
 representation of said component, so why not house them together in one file? It's convenient!
 
 It's important to note that using JSX is _entirely_ optional. If writing HTML in your JavaScript like this feels like
