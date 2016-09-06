@@ -58,9 +58,8 @@ notice that the benefits far outweigh the (imaginary) cost of writing HTML in yo
 the front-end using strings, this is just easier! Our component code is usually tightly intertwined with the
 representation of said component, so why not house them together in one file? It's convenient!
 
-It's important to note that using JSX is _entirely_ optional. If writing HTML in your JavaScript like this feels like
-you're committing a mortal sin, it's okay to use `React.createElement()`. You'll be less productive, but at least you'll
-feel okay!
+It's important to note that using JSX is _entirely_ optional. If writing HTML in your JavaScript feels like committing a
+mortal sin, it's okay to use `React.createElement()`. You'll be less productive, but at least you'll feel good about it!
 
 Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX
 code, it's not something that browsers understand. To compile our code into something that the browsers understand, we
