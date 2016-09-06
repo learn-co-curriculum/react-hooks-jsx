@@ -231,6 +231,8 @@ we want to export when setting the value of `module.exports`. You can also inlin
 
 ```js
 // In a file called `Tweet.js`
+const React = require('react');
+
 class Tweet extends React.Component {
   render() {
     return (
