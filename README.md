@@ -1,15 +1,15 @@
 # React JSX
 
-## Objectives
-1. Learn how to compile JSX to plain JavaScript
-2. Set up [browserify][browserify] and
-   [babelify][babelify] for compiling your application.
-3. Render a React component using JSX
+## Overview 
 
-## Introduction
-In this lesson, we'll be talking about using JSX in our React code, as well as how to transpile this code from JSX to
-JS that browsers understand. We'll do this by bundling our scripts using Browserify, and transforming the JSX using
-Babel. This lesson is fairly long, so strap in!
+In this lesson, we'll discuss using JSX in our React code and how to transpile this code from JSX to JS that browsers understand. We'll do this by bundling our scripts using Browserify, and transforming the JSX using
+Babel.
+
+## Objectives
+
+1. Compile JSX to plain JavaScript
+2. Set up [browserify][browserify] and [babelify][babelify] for compiling an application
+3. Render a React component using JSX
 
 ## What's JSX?
 Simply put, JSX allows us to write XML in our JavaScript files. Wait, you say, we can already do this! We just save our
@@ -23,6 +23,7 @@ to write. It'll blow your mind — I promise.
 ![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
 
 ## What does it look like?
+
 A React component written in JSX looks something like this:
 
 ```js
