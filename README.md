@@ -41,10 +41,10 @@ class Tweet extends React.Component {
 ```
 
 Isn't this great? Look how readable it is! It's _literally_ HTML, but in our JS! Looking at this code, there are some
-important things to note. First of all, JSX is _not_ a string — it's not inbetween quotes. Think of it as another type
+important things to note. First of all, JSX is _not_ a string — it's not in between quotes. Think of it as another type
 in JavaScript. Secondly, the parentheses containing the JSX are entirely optional, but recommended by convention.
 
-And las—
+And las...
 
 ...Wait, do you hear that? What's that outside the window?
 
@@ -52,7 +52,7 @@ And las—
 
 It's an angry mob! We're mixing HTML and JS! We've created an abomination! _Blasphemy!_
 
-Believe it or not (especially after seeing how cool JSX is), but some developers _despise_ using JSX. They think mixing
+Believe it or not (especially after seeing how cool JSX is), some developers _despise_ using JSX. They think mixing
 languages like this is something that should never be done. However, if you give it a little bit of time, you'll soon
 notice that the benefits far outweigh the (imaginary) cost of writing HTML in your JS. We've been doing it all along in
 the front-end using strings, this is just easier! Our component code is usually tightly intertwined with the
@@ -111,9 +111,9 @@ As you can see, it's returning _one_ element with its children. Not being able t
 earlier code sample now makes sense — returning two values at once in JavaScript is conceptually impossible.
 
 Another thing to note is that since we're still writing JS code, we need to avoid using keywords in our code. You might
-have noticed it already, but we're setting HTML classes using the `className` attribute (or prop, in React terms),
-instead of `class`. This is because `class` is a reserved keyword in JavaScript! The same thing is true for the `for`
-label, which is another keyword in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
+have noticed it already: we're setting HTML classes using the `className` attribute (or prop, in React terms), instead
+of `class`. This is because `class` is a reserved keyword in JavaScript! The same thing is true for the `for` label,
+which is another keyword in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
 
 ## Babel and Browserify
 ![Tower of Babel](http://www.ancient-origins.net/sites/default/files/field/image/tower-of-babel-2.jpg)
