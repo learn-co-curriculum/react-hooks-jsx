@@ -38,7 +38,7 @@ class Tweet extends React.Component {
 
 Isn't this great? Look how readable it is! It's _literally_ HTML, but in our JS! Looking at this code, there are some important things to note. First of all, JSX is _not_ a string — it's not in between quotes. Think of it as another type in JavaScript. Secondly, the parentheses containing the JSX are entirely optional, but recommended by convention.
 
-And las...
+And last...
 
 ...Wait, do you hear that? What's that outside the window?
 
@@ -266,3 +266,5 @@ It's very important to know how this stuff works on a high level, because most o
 - [Babel](http://babeljs.io/)
 - [Babelify](https://github.com/babel/babelify)
 - [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
