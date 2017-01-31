@@ -7,7 +7,7 @@ In this lesson, we'll discuss using JSX in our React code and how to transpile t
 ## Objectives
 
 1. Compile JSX to plain JavaScript
-2. Set up [browserify](https://github.com/substack/node-browserify) and [babelify](https://github.com/babel/babelify)for compiling an application
+2. Set up [browserify](https://github.com/substack/node-browserify) and [babelify](https://github.com/babel/babelify) for compiling an application
 3. Render a React component using JSX
 
 ## What's JSX?
