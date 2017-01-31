@@ -28,7 +28,7 @@ class Tweet extends React.Component {
       <div className="tweet">
         <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
         <div className="tweet__body">
-            <p>We're writing this tweet in JSX. Holy moly!</p>  
+            <p>We are writing this tweet in JSX. Holy moly!</p>  
         </div>
       </div>
     );
