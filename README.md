@@ -7,7 +7,7 @@ In this lesson, we'll discuss using JSX in our React code and how to transpile t
 ## Objectives
 
 1. Compile JSX to plain JavaScript
-2. Set up [browserify](https://github.com/substack/node-browserify) and [babelify](https://github.com/babel/babelify)for compiling an application
+2. Set up [browserify](https://github.com/substack/node-browserify) and [babelify](https://github.com/babel/babelify) for compiling an application
 3. Render a React component using JSX
 
 ## What's JSX?
@@ -28,7 +28,7 @@ class Tweet extends React.Component {
       <div className="tweet">
         <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
         <div className="tweet__body">
-            <p>We're writing this tweet in JSX. Holy moly!</p>  
+            <p>We are writing this tweet in JSX. Holy moly!</p>  
         </div>
       </div>
     );
