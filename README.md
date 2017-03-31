@@ -136,13 +136,13 @@ Now, we'll run the script using `npm run bundle`. Wait, now it does work? Why's 
 Our `index.js` file is still empty at this point though. Let's practice writing modular code by creating a new file in `components/foo.js` (you'll also need to create the `components/` directory). In that file, we'll add this content:
 
 ```js
-module.exports = 'I am a component!';
+export const message = "I am a component!"
 ```
 
-We'll get to what the `module.exports` stuff is in just a second. We can import this component in our `index.js` by using `require()` and assigning the result to a variable:
+We can import this component in our `index.js` by using `import` and referencing the origin file:
 
 ```js
-const component = require('./components/foo');
+import {message} from './components/foo'
 ```
 
 Note that files are always referred to using a relative path (even if they are in the same directory). This way Node knows whether to look for a local module or one found in `node_modules`, or in the global modules. Adding the `.js`  extension is not required.
@@ -151,37 +151,32 @@ Back to the exporting stuff! Using CommonJS, we have two options of exporting th
 
 
 ### Named exports
-Named exports allow us to export several things at once. This is useful for utility modules or libraries. Exporting several things at once is done by exporting an object when setting the value of `module.exports`.
+Named exports allow us to export several things at once. This is useful for utility modules or libraries. Exporting several things at once is done by exporting an object. Because we are exporting this object as default without a name, we can assign it any name when we import it (in this case "fruit").
 
 ```js
 // In a file called `fruits.js`
-module.exports = {
+export default {
   apple: 'red',
   banana: 'yellow',
 };
 
 // In a file in the same directory
-const fruits = require('./fruits');
+import fruit from './fruits'
 console.log(fruits.apple); // prints 'red'
 
 // In another file, also in the same directory
-const apple = require('./fruits').apple;
+import {apple} from './fruits'
 console.log(apple); // prints 'red'
 ```
 
-When using named exports, we can choose to either import the entire thing and then reference the keys on the exported object, or we can import one specific key. The last example can also be rewritten using ES2015 destructuring syntax:
-
-```js
-const { apple } = require('./fruits');
-console.log(apple); // prints 'red'
-```
+When using named exports, we can choose to either import the entire thing and then reference the keys on the exported object, or we can import one specific key.
 
 ### Default export
-A default export means we're exporting just one thing. This is useful for exporting components in their own file, since there's only one thing there: the component itself. Exporting one thing only is done by exporting a reference to what we want to export when setting the value of `module.exports`. You can also inline the value of what you want to export.
+A default export means we're exporting just one thing. This is useful for exporting components in their own file, since there's only one thing there: the component itself. Exporting one thing only is done by exporting a reference to what we want to export. You can also inline the value of what you want to export.
 
 ```js
 // In a file called `Tweet.js`
-const React = require('react');
+import React from 'react'
 
 class Tweet extends React.Component {
   render() {
@@ -196,10 +191,11 @@ class Tweet extends React.Component {
   }
 }
 
-module.exports = Tweet;
+export default Tweet;
 
 // In a file in the same directory
-const Tweet = require('./Tweet');
+import Tweet from './Tweet'
+import ReactDOM from 'react-dom'
 
 ReactDOM.render(
   <Tweet />,
@@ -222,7 +218,7 @@ $ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babel
 
 Let's quickly go through the modules we just installed. `babel-core` is Babel itself. Just by itself, Babel does absolutely _nothing_ to your files. You need to explicitly tell it what plugins to use. Luckily, there are transform _presets_ that form a collection of these separate plugins. That's what the `babel-preset-es2015` and `babel-preset-react` modules are for: they respectively transform our ES2015 and JSX code into JS that is understandable by browsers _today_. Lastly, we install `babelify` which is the transformer for Browserify.
 
-We still need to let Babel know what presets we'd like to use. Babel reads its configuration from a `.babelrc` file in the project's root. This is a JSON file with Babel's options:
+We still need to let Babel know what presets we'd like to use. Babel reads its configuration from a `.babelrc` file. Create this file in the project's root. This is a JSON file with Babel's options:
 
 ```json
 {
@@ -241,7 +237,7 @@ Now all that's left to do is let Browserify know which transformer to use. In `p
 
 That should do the trick. Running `npm run bundle` should now correctly transpile our ES2015 and JSX code into one file called `bundle.js`. Success!
 
-**Important: whenever writing JSX, _always_ import React (`const React = require('react');`). This is because Babel uses `React.createElement()` to compile our JSX down to JS. If `React` isn't found in that file, it'll throw an error!**
+**Important: whenever writing JSX, _always_ import React (`import React from 'react'`). This is because Babel uses `React.createElement()` to compile our JSX down to JS. If `React` isn't found in that file, it'll throw an error!**
 
 ## Using the bundle
 In the past, we've always loaded our source code in the HTML:
