@@ -2,12 +2,12 @@
 
 ## Overview 
 
-In this lesson, we'll discuss using JSX in our React code and how to transpile this code from JSX to JS that browsers understand. We'll do this by bundling our scripts using Browserify, and transforming the JSX using Babel.
+In this lesson, we'll discuss using JSX in our React code.
 
 ## Objectives
 
-1. Compile JSX to plain JavaScript
-2. Set up [browserify](https://github.com/substack/node-browserify) and [babelify](https://github.com/babel/babelify) for compiling an application
+1. Learn JSX
+2. Compiling with Babel and Webpack
 3. Render a React component using JSX
 
 ## What's JSX?
@@ -50,7 +50,7 @@ Believe it or not (especially after seeing how cool JSX is), some developers _de
 
 It's important to note that using JSX is _entirely_ optional. If writing HTML in your JavaScript feels like committing a mortal sin, it's okay to use `React.createElement()`. You'll be less productive, but at least you'll feel good about it!
 
-Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX code, it's not something that browsers understand. To compile our code into something that the browsers understand, we use Babel that transpiles our code down to working JS that all browsers can handle. More on that later!
+Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX code, it's not something that browsers understand. To compile our code into something that the browsers understand, we need to transpiles our code down into working JS (es5 code) that all browsers can handle. More on that later!
 
 ## Gotchas
 In the above code, you'll see that we're returning _one_ XML element (the `.tweet` div). JSX always has one, and _only_ one element (that optionally has children, grandchildren, and so on). You'd think we could do something like this:
@@ -96,53 +96,33 @@ As you can see, it's returning _one_ element with its children. Not being able t
 
 Another thing to note is that since we're still writing JS code, we need to avoid using keywords in our code. You might have noticed it already: we're setting HTML classes using the `className` attribute (or prop, in React terms), instead of `class`. This is because `class` is a reserved keyword in JavaScript! The same thing is true for the `for` label, which is another keyword in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
 
-## Babel and Browserify
+## Babel and Webpack
 ![Tower of Babel](http://www.ancient-origins.net/sites/default/files/field/image/tower-of-babel-2.jpg)
 
 Earlier on in the lesson, we talked about how we'd use something called [Babel](babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardised and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
 
-We won't use Babel as-is, though. Starting now, we're going to write our code in a more modular fashion, splitting things up in separate files when it makes sense. _Sigh_. Does that mean we're going to need to add a script reference in our HTML for _every_ little file we're going to make? Nope! That's where our second new technology comes in: Browserify!
+In the last couple of labs we have been using `npm start` to run our code in the browser and `npm test` to run our tests. The commands have been running Webpack and Babel to transpile our code into readable JS for all browsers. If you take a look in the root directory you will see a `.babelrc` file this contains that Babel pluggins that we use to transpile our code. 
 
-[Browserify](http://browserify.org/) lets us require modules using [Node's version of the CommonJS module system](https://github.com/substack/browserify-handbook#node-packaged-modules). This means that we can include modules in our file (both local files as well as `node_modules` installed with `npm`). When compiling a file with Browserify, it'll check every file for stuff that it needs to import, and also include that code. In more technical terms, it's traversing the dependency tree and inlining those dependencies in our script. What we'll end up with is one big JS file that includes _all_ of our code, including any dependencies (like `React`, or our own components) in that file too. That way, we also only need to have one script reference in our HTML: the bundled version!
+[Webpack](webpack.github.io) lets us require modules using Node's version of the CommonJS module system. This means that we can include modules in our file (both local files as well as `node_modules` installed with `npm`). When compiling a file with Webpack, it'll check every file for stuff that it needs to import, and also include that code. In more technical terms, it's traversing the dependency tree and inlining those dependencies in our script. What we'll end up with is one big JS file that includes _all_ of our code, including any dependencies (like `React`, or our own components) in that file too. That way, we also only need to have one script reference in our HTML: the bundled version!
 
-One of the benefits of Browserify is that it wraps every module in an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE), ensuring that no variable is global (unless you force it by setting something on `window`). This allows for pretty powerful modularization — we only export what we want other modules to use, and the rest is 'private' by default.
+One of the benefits of Webpack is that it wraps every module in an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE), ensuring that no variable is global (unless you force it by setting something on `window`). This allows for pretty powerful modularization — we only export what we want other modules to use, and the rest is 'private' by default.
 
-Browserify also lets us _transform_ the code we're bundling. That's where Babel comes in again: we'll use a Babel transform to compile our code down to readable JS that browsers understand.
+Webpack also lets us _transform_ the code we're bundling. That's where Babel comes in again: we'll use a Babel transform to compile our code down to readable JS that browsers understand.
 
-## Nuts and bolts
-Let's see if we can get this to work! First of all, we'll need to install the `browserify` module:
+## Writing Modular Code
 
-```
-$ npm install --save-dev browserify
-```
+Let's practice writing some modular code in our application. 
 
-Once that's done, we'll compile our code using the `browserify` command. We can do so by running the following:
-
-```
-$ browserify index.js -o bundle.js
-```
-
-The first argument is the path to our main JS file (that is responsible for importing all other files). Next, we tell it where we want the output bundle to go. In this case, that's the same directory, in a file called `bundle.js`. When you run the command above, chances are you'll run into an error that says `browserify` is not found. That's totally fine! It's not globally installed, but we don't need it to be, because we'll build our JS using an `npm` script. Taking a look at the `package.json` file, we'll find an object called `scripts` that contains various scripts we can run in our project. We'll add another script now that builds our JS:
-
-```json
-"scripts": {
-  ... (other scripts)
-  "bundle": "browserify index.js -o bundle.js",
-}
-```
-
-Now, we'll run the script using `npm run bundle`. Wait, now it does work? Why's that? Well, `npm` knows `browserify` is a module that has an executable (or a binary), and links it in `node_modules/.bin/`. When `npm run` runs a script, it first checks if any command there can be found in that `.bin` folder, before using the system-wide commands. Handy!
-
-Our `index.js` file is still empty at this point though. Let's practice writing modular code by creating a new file in `components/foo.js` (you'll also need to create the `components/` directory). In that file, we'll add this content:
+Our `index.js` file is still empty at this point. Let's practice writing modular code by creating a new file in `/src/components/foo.js` (you'll also need to create the `/src/components/` directory). In that file, we'll add this content:
 
 ```js
-export const message = "I am a component!"
+export const message = "I am a component!";
 ```
 
 We can import this component in our `index.js` by using `import` and referencing the origin file:
 
 ```js
-import {message} from './components/foo'
+import { message } from './components/foo';
 ```
 
 Note that files are always referred to using a relative path (even if they are in the same directory). This way Node knows whether to look for a local module or one found in `node_modules`, or in the global modules. Adding the `.js`  extension is not required.
@@ -161,11 +141,11 @@ export default {
 };
 
 // In a file in the same directory
-import fruit from './fruits'
+import fruit from './fruits';
 console.log(fruits.apple); // prints 'red'
 
 // In another file, also in the same directory
-import {apple} from './fruits'
+import { apple } from './fruits';
 console.log(apple); // prints 'red'
 ```
 
@@ -194,8 +174,8 @@ class Tweet extends React.Component {
 export default Tweet;
 
 // In a file in the same directory
-import Tweet from './Tweet'
-import ReactDOM from 'react-dom'
+import Tweet from './Tweet';
+import ReactDOM from 'react-dom';
 
 ReactDOM.render(
   <Tweet />,
@@ -205,60 +185,11 @@ ReactDOM.render(
 
 You'll mostly be using this method. It's important to correctly export your components, otherwise the tests can't access the code you've written, causing them to fail!
 
-## Transforming the JSX
-![Our code being transformed](https://media.giphy.com/media/FmW24votl9LdS/giphy.gif)
-
-Now that we know how we can compile our bundle using Browserify, it's time to transform our JSX using Babel. Without the right transformer, Browserify won't know how to handle the JSX in our code and will fail, thinking the code we wrote has syntax errors in it.
-
-To use a transformer, we pass the transformer name to the `browserify` command. First, we'll have to install some extra stuff:
-
-```
-$ npm install --save-dev babel-core babel-preset-es2015 babel-preset-react babelify
-```
-
-Let's quickly go through the modules we just installed. `babel-core` is Babel itself. Just by itself, Babel does absolutely _nothing_ to your files. You need to explicitly tell it what plugins to use. Luckily, there are transform _presets_ that form a collection of these separate plugins. That's what the `babel-preset-es2015` and `babel-preset-react` modules are for: they respectively transform our ES2015 and JSX code into JS that is understandable by browsers _today_. Lastly, we install `babelify` which is the transformer for Browserify.
-
-We still need to let Babel know what presets we'd like to use. Babel reads its configuration from a `.babelrc` file. Create this file in the project's root. This is a JSON file with Babel's options:
-
-```json
-{
-  "presets": ["es2015", "react"]
-}
-```
-
-Now all that's left to do is let Browserify know which transformer to use. In `package.json`, we'll update our `bundle` script to use the transformer:
-
-```json
-"scripts": {
-  ... (other scripts)
-  "bundle": "browserify index.js -t babelify -o bundle.js",
-}
-```
-
-That should do the trick. Running `npm run bundle` should now correctly transpile our ES2015 and JSX code into one file called `bundle.js`. Success!
-
-**Important: whenever writing JSX, _always_ import React (`import React from 'react'`). This is because Babel uses `React.createElement()` to compile our JSX down to JS. If `React` isn't found in that file, it'll throw an error!**
-
-## Using the bundle
-In the past, we've always loaded our source code in the HTML:
-
-```html
-<script src="index.js"></script>
-```
-
-Instead, now we'll reference our compiled (or bundled) code:
-
-```html
-<script src="bundle.js"></script>
-```
-
-That's the only script we need to add to our HTML file to make everything work. This bundle includes our source code as well as anything else we've imported in our code, like libraries (e.g. `React`, `ReactDOM` and others).
-
 ## Future labs
-It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Browserify, Webpack or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm run bundle` any time you want to compile your changes and view them in the browser. That's it!
+It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Webpack, Browserify or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm start` to start the compiling process. This will watch your code anytime you save your code and reload your browser. That's it!
 
 ## Resources
-- [Browserify](https://github.com/substack/node-browserify)
+- [Webpack](webpack.github.io)
 - [Babel](http://babeljs.io/)
 - [Babelify](https://github.com/babel/babelify)
 - [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html)
