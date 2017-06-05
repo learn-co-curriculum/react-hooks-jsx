@@ -142,7 +142,7 @@ export default {
 
 // In a file in the same directory
 import fruit from './fruits';
-console.log(fruits.apple); // prints 'red'
+console.log(fruit.apple); // prints 'red'
 
 // In another file, also in the same directory
 import { apple } from './fruits';
