@@ -99,7 +99,7 @@ Another thing to note is that since we're still writing JS code, we need to avoi
 ## Babel and Webpack
 ![Tower of Babel](http://www.ancient-origins.net/sites/default/files/field/image/tower-of-babel-2.jpg)
 
-Earlier on in the lesson, we talked about how we'd use something called [Babel](babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardised and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
+Earlier on in the lesson, we talked about how we'd use something called [Babel](http://babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardised and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
 
 In the last couple of labs we have been using `npm start` to run our code in the browser and `npm test` to run our tests. The commands have been running Webpack and Babel to transpile our code into readable JS for all browsers. If you take a look in the root directory you will see a `.babelrc` file this contains that Babel pluggins that we use to transpile our code. 
 
@@ -189,7 +189,7 @@ You'll mostly be using this method. It's important to correctly export your comp
 It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Webpack, Browserify or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm start` to start the compiling process. This will watch your code anytime you save your code and reload your browser. That's it!
 
 ## Resources
-- [Webpack](webpack.github.io)
+- [Webpack](http://webpack.github.io)
 - [Babel](http://babeljs.io/)
 - [Babelify](https://github.com/babel/babelify)
 - [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html)
