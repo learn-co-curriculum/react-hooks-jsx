@@ -21,7 +21,7 @@ Up until now, we've been writing our components and elements using `React.create
 
 A React component written in JSX looks something like this:
 
-```js
+```jsx
 class Tweet extends React.Component {
   render() {
     return (
@@ -55,7 +55,7 @@ Once we have our JSX, we'll need to perform an additional step to get this to wo
 ## Gotchas
 In the above code, you'll see that we're returning _one_ XML element (the `.tweet` div). JSX always has one, and _only_ one element (that optionally has children, grandchildren, and so on). You'd think we could do something like this:
 
-```js
+```jsx
 return (
   <p>I am the first paragraph</p>
   <p>I am the second paragraph</p>
@@ -64,7 +64,7 @@ return (
 
 But we can't! We'd have to wrap these two paragraphs in a `div` element:
 
-```js
+```jsx
 return (
   <div>
     <p>I am the first paragraph</p>
@@ -75,7 +75,7 @@ return (
 
 The reason for this becomes abundantly clear when we take a look at the compiled output for the above code sample. This is the same code, but compiled down to regular JS:
 
-```js
+```jsx
 return React.createElement(
   "div",
   null,
@@ -154,7 +154,7 @@ When using named exports, we can choose to either import the entire thing and th
 ### Default export
 A default export means we're exporting just one thing. This is useful for exporting components in their own file, since there's only one thing there: the component itself. Exporting one thing only is done by exporting a reference to what we want to export. You can also inline the value of what you want to export.
 
-```js
+```jsx
 // In a file called `Tweet.js`
 import React from 'react';
 
