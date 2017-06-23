@@ -1,6 +1,6 @@
 # React JSX
 
-## Overview 
+## Overview
 
 In this lesson, we'll discuss using JSX in our React code.
 
