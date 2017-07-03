@@ -50,7 +50,7 @@ Believe it or not (especially after seeing how cool JSX is), some developers _de
 
 It's important to note that using JSX is _entirely_ optional. If writing HTML in your JavaScript feels like committing a mortal sin, it's okay to use `React.createElement()`. You'll be less productive, but at least you'll feel good about it!
 
-Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX code, it's not something that browsers understand. To compile our code into something that the browsers understand, we need to transpiles our code down into working JS (es5 code) that all browsers can handle. More on that later!
+Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX code, it's not something that browsers understand. To compile our code into something that the browsers understand, we need to transpile our code down into working JS (ES5 code) that all browsers can handle. More on that later!
 
 ## Gotchas
 In the above code, you'll see that we're returning _one_ XML element (the `.tweet` div). JSX always has one, and _only_ one element (that optionally has children, grandchildren, and so on). You'd think we could do something like this:
@@ -99,9 +99,9 @@ Another thing to note is that since we're still writing JS code, we need to avoi
 ## Babel and Webpack
 ![Tower of Babel](http://www.ancient-origins.net/sites/default/files/field/image/tower-of-babel-2.jpg)
 
-Earlier on in the lesson, we talked about how we'd use something called [Babel](http://babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardised and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
+Earlier on in the lesson, we talked about how we'd use something called [Babel](http://babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardized and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
 
-In the last couple of labs we have been using `npm start` to run our code in the browser and `npm test` to run our tests. The commands have been running Webpack and Babel to transpile our code into readable JS for all browsers. If you take a look in the root directory you will see a `.babelrc` file this contains that Babel pluggins that we use to transpile our code. 
+In the last couple of labs we have been using `npm start` to run our code in the browser and `npm test` to run our tests. The commands have been running Webpack and Babel to transpile our code into readable JS for all browsers. If you take a look in the root directory you will see a `.babelrc` file. This contains the Babel plugins that we use to transpile our code. 
 
 [Webpack](webpack.github.io) lets us require modules using Node's version of the CommonJS module system. This means that we can include modules in our file (both local files as well as `node_modules` installed with `npm`). When compiling a file with Webpack, it'll check every file for stuff that it needs to import, and also include that code. In more technical terms, it's traversing the dependency tree and inlining those dependencies in our script. What we'll end up with is one big JS file that includes _all_ of our code, including any dependencies (like `React`, or our own components) in that file too. That way, we also only need to have one script reference in our HTML: the bundled version!
 
@@ -179,7 +179,7 @@ import ReactDOM from 'react-dom';
 
 ReactDOM.render(
   <Tweet />,
-  document.getElementById('main')
+  document.getElementById('root')
 );
 ```
 
