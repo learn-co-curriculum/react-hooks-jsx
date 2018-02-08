@@ -99,11 +99,11 @@ Another thing to note is that since we're still writing JS code, we need to avoi
 ## Babel and Webpack
 ![Tower of Babel](http://www.ancient-origins.net/sites/default/files/field/image/tower-of-babel-2.jpg)
 
-Earlier on in the lesson, we talked about how we'd use something called [Babel](http://babeljs.io) to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardized and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
+Earlier on in the lesson, we talked about how we'd use something called [Babel][Babel] to compile our JSX down to browser-readable JavaScript. Babel also allows us to use new JS features before they are standardized and implemented in the browser, allowing us to write the most modern code we can, without worrying about browser support. Babel transpiles everything back down to JavaScript that _all_ browsers can understand. Neat!
 
 In the last couple of labs we have been using `npm start` to run our code in the browser and `npm test` to run our tests. The commands have been running Webpack and Babel to transpile our code into readable JS for all browsers. If you take a look in the root directory you will see a `.babelrc` file. This contains the Babel plugins that we use to transpile our code. 
 
-[Webpack](webpack.github.io) lets us require modules using Node's version of the CommonJS module system. This means that we can include modules in our file (both local files as well as `node_modules` installed with `npm`). When compiling a file with Webpack, it'll check every file for stuff that it needs to import, and also include that code. In more technical terms, it's traversing the dependency tree and inlining those dependencies in our script. What we'll end up with is one big JS file that includes _all_ of our code, including any dependencies (like `React`, or our own components) in that file too. That way, we also only need to have one script reference in our HTML: the bundled version!
+[Webpack][Webpack] lets us require modules using Node's version of the CommonJS module system. This means that we can include modules in our file (both local files as well as `node_modules` installed with `npm`). When compiling a file with Webpack, it'll check every file for stuff that it needs to import, and also include that code. In more technical terms, it's traversing the dependency tree and inlining those dependencies in our script. What we'll end up with is one big JS file that includes _all_ of our code, including any dependencies (like `React`, or our own components) in that file too. That way, we also only need to have one script reference in our HTML: the bundled version!
 
 One of the benefits of Webpack is that it wraps every module in an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE), ensuring that no variable is global (unless you force it by setting something on `window`). This allows for pretty powerful modularization — we only export what we want other modules to use, and the rest is 'private' by default.
 
@@ -189,9 +189,9 @@ You'll mostly be using this method. It's important to correctly export your comp
 It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Webpack, Browserify or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm start` to start the compiling process. This will watch your code anytime you save your code and reload your browser. That's it!
 
 ## Resources
-- [Webpack](http://webpack.github.io)
-- [Babel](http://babeljs.io/)
-- [Babelify](https://github.com/babel/babelify)
-- [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html)
+- [Webpack]: http://webpack.github.io
+- [Babel]: http://babeljs.io/
+- [Babelify]: https://github.com/babel/babelify
+- [JSX]: https://facebook.github.io/react/docs/jsx-in-depth.html
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
