@@ -173,9 +173,9 @@ You'll mostly be using this method. It's important to correctly export your comp
 It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Webpack, Browserify or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm start` to start the compiling process. This will watch your code anytime you save your code and reload your browser. That's it!
 
 ## Resources
-- [Webpack]: http://webpack.github.io
-- [Babel]: http://babeljs.io/
-- [Babelify]: https://github.com/babel/babelify
-- [JSX]: https://facebook.github.io/react/docs/jsx-in-depth.html
+- Webpack: http://webpack.github.io
+- Babel: http://babeljs.io/
+- Babelify: https://github.com/babel/babelify
+- JSX: https://facebook.github.io/react/docs/jsx-in-depth.html
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
