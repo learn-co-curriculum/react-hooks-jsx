@@ -91,11 +91,13 @@ As you can see, it's returning _one_ element with its children. Not being able t
 
 Another thing to note is that since we're still writing JS code, we need to avoid using keywords in our code. You might have noticed it already: we're setting HTML classes using the `className` attribute (or prop, in React terms), instead of `class`. This is because `class` is a reserved keyword in JavaScript! The same thing is true for the `for` label, which is another keyword in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
 
-## Writing Modular Code
+## A Quick Note on Exporting
 
-Let's practice writing some modular code in our application.
+In addition to JSX, and in-line with general good programming practices, we want to write modular code. That is, we want to split our code up into logical sections/separate files. Let's practice how we do just that in React:
 
-Our `index.js` file is still empty at this point. Let's practice writing modular code by creating a new file in `/src/components/foo.js` (you'll also need to create the `/src/components/` directory). In that file, we'll add this content:
+Go ahead and create a `/src` directory in this repository and add `index.js` to it.
+
+Let's practice writing modular code by creating a new file in `/src/components/foo.js` (you'll also need to create the `/src/components/` directory). In that file, we'll add this content:
 
 ```js
 export const message = "I am a component!";
@@ -107,10 +109,9 @@ We can import this component in our `index.js` by using `import` and referencing
 import { message } from './components/foo';
 ```
 
-Note that files are always referred to using a relative path (even if they are in the same directory). This way Node knows whether to look for a local module or one found in `node_modules`, or in the global modules. Adding the `.js`  extension is not required.
+Note that files are always referred to using a relative path (even if they are in the same directory). This way Node knows whether to look for a local module, one found in `node_modules`, or in the global modules.
 
 Back to the exporting stuff! Using CommonJS, we have two options of exporting things out of our files: either through named exports (exporting multiple things) or a default export (exporting one thing).
-
 
 ### Named exports
 Named exports allow us to export several things at once. This is useful for utility modules or libraries. Exporting several things at once is done by exporting an object. Because we are exporting this object as default without a name, we can assign it any name when we import it (in this case "fruit").
@@ -136,7 +137,7 @@ When using named exports, we can choose to either import the entire thing and th
 ### Default export
 A default export means we're exporting just one thing. This is useful for exporting components in their own file, since there's only one thing there: the component itself. Exporting one thing only is done by exporting a reference to what we want to export. You can also inline the value of what you want to export.
 
-```jsx
+```js
 // In a file called `Tweet.js`
 import React from 'react';
 
@@ -168,7 +169,7 @@ ReactDOM.render(
 You'll mostly be using this method. It's important to correctly export your components, otherwise the tests can't access the code you've written, causing them to fail!
 
 ## Future labs
-It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another — be it using Webpack, Browserify or something else. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the bundling stuff set up for you. You just need to run `npm start` to start the compiling process. This will watch your code anytime you save your code and reload your browser. That's it!
+It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the JSX transforming stuff set up for you. You just need to run `npm install` and `npm start` to execute the JSX --> React run-able JavaScript process. 
 
 ## Resources
 - Webpack: http://webpack.github.io
