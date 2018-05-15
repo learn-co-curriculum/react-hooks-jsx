@@ -35,9 +35,7 @@ class Tweet extends React.Component {
 }
 ```
 
-Isn't this great? Look how readable it is! It's _literally_ HTML, but in our JS! Looking at this code, there are some important things to note. First of all, JSX is _not_ a string — it's not in between quotes. Think of it as another type in JavaScript. Secondly, the parentheses containing the JSX are entirely optional, but recommended by convention.
-
-And last...
+Isn't this great? Look how readable it is! It's _literally_ HTML, but in our JS! Looking at this code, there are some important things to note. JSX is _not_ a string — it's not in between quotes. Think of it as another type in JavaScript. 
 
 ...Wait, do you hear that? What's that outside the window?
 
