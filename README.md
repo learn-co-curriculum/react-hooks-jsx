@@ -12,7 +12,7 @@ In this lesson, we'll discuss using JSX in our React code.
 ## What's JSX?
 Simply put, JSX allows us to write XML in our JavaScript files. Wait, you say, we can already do this! We just save our XML in strings! Yep, but this is different. JSX is where JS and XML/HTML _meet_, creating a very special and extremely productive marriage.
 
-Up until now, we've been writing our components and elements using `React.createElement()`. JSX allows us to write these components in a way that is very similar to the end result we see in the browser (i.e. HTML), and is _much_ faster to write. It'll blow your mind — I promise.
+JSX allows us to write React components in JavaScript files in an efficient and expressive manner. Ultimately, JSX looks a lot like the end result we see in the browser (i.e. HTML), and is _much_ faster to write. It'll blow your mind — I promise.
 
 ![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
 
