@@ -20,7 +20,7 @@ JSX allows us to write React components in JavaScript files in an efficient and 
 
 A React component written in JSX looks something like this:
 
-```jsx
+```js
 class Tweet extends React.Component {
   render() {
     return (
@@ -50,7 +50,7 @@ Once we have our JSX, we'll need to perform an additional step to get this to wo
 ## Gotchas
 In the above code, you'll see that we're returning _one_ XML element (the `.tweet` div). JSX always has one, and _only_ one element (that optionally has children, grandchildren, and so on). You'd think we could do something like this:
 
-```jsx
+```js
 return (
   <p>I am the first paragraph</p>
   <p>I am the second paragraph</p>
@@ -59,7 +59,7 @@ return (
 
 But we can't! We'd have to wrap these two paragraphs in a `div` element:
 
-```jsx
+```js
 return (
   <div>
     <p>I am the first paragraph</p>
@@ -70,7 +70,7 @@ return (
 
 The reason for this becomes abundantly clear when we take a look at the compiled output for the above code sample. This is the same code, but compiled down to regular JS:
 
-```jsx
+```js
 return React.createElement(
   "div",
   null,
