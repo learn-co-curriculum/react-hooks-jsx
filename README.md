@@ -53,7 +53,7 @@ HTML!_ Looking at this code, there are some important things to point out:
 
 ###### JSX is _not_ a String
 
-The JSX in the example about is not wrapped in quotes. Think of it as another
+The JSX in the example is not wrapped in quotes. Think of it as another
 type in JavaScript. **We are not interpolating HTML Strings** like we do with
 standard JavaScript DOM manipulation.
 
@@ -62,14 +62,28 @@ standard JavaScript DOM manipulation.
 Every component you use needs a `render()` method that returns some valid JSX.
 Although our example displays six lines of JSX, this is done for readability
 only. The entire return statement is wrapped in parentheses so it is considered
-one 'chunk' of JSX code, with _one_ top level element (in this case, a `div`).
+one 'chunk' of JSX code, with _one_ top level element.
+
+```js
+return (
+  <div  className="tweet">
+    ...
+  </div>
+)
+```
 
 ###### JSX can include JavaScript
 
 While writing our pseudo-HTML, JSX, we can also write vanilla JavaScript
-_in-line_. We do this by wrapping the JavaScript code in curly braces. In the
-example, we call the `Math.floor()`  and `Math.random()` methods directly,
-which will return a random number when the component is rendered.
+_in-line_. We do this by wrapping the JavaScript code in curly braces.
+
+```js
+<p>{ Math.floor(Math.random()*100) } retweets</p>
+<p>{ this.currentTime() }</p>
+```
+
+In the example, we call the `Math.floor()`  and `Math.random()` methods
+directly, which will return a random number when the component is rendered.
 
 We _also_ called a custom function, `currentTime()`, which returns the String
 value of the current date and time. In our example, because `currentTime()` is
@@ -87,22 +101,13 @@ arrow function for `currentTime()`,
 currentTime = () => new Date().toString()
 ```
 
-...we are _implicitly binding_ the method to the Tweet class.
+...we are _implicitly binding_ the method to the Tweet class. Getting acquainted with
+using [arrow functions][arrowf] now will save headaches later.
 
-We _could_ use the class method format to define `currentTime()`:
-
-```js
-currentTime() {
-  return new Date().toString()
-}
-```
-
-...and this will still work in our current example, but getting acquainted with
-using arrow functions now will save headaches later. As we get into _props_ in
-React, we sometimes need to call functions like `currentTime()` in a class
-_different from its origin_. When this happens, **without the arrow
-function**, we often end up having to explicitly bind methods to the class their
-_originally from_, causing us to write code like this:
+As we get into _props_ in React, we sometimes need to call functions like
+`currentTime()` in a class _different from its origin_. When this happens,
+**without the arrow function**, we often have to explicitly bind methods to the
+class their _originally from_, causing us to write code like this:
 
 ```js
 this.currentTime().bind(this)
@@ -169,7 +174,7 @@ class ParentComponent extends Component {
 Each of these is a valid component, but _all_ of these components have _one_
 returned JSX element that contains everything else. Without an element that
 wraps the returned JSX in a component, we will get an error. There are _some_
-exceptions to this, such as [React fragments][frag], that we will look at, but most
+exceptions to this, such as [React fragments][frag], but most
 often, we will be using the HTML-like JSX elements.
 
 ## Avoiding Keywords
@@ -181,33 +186,11 @@ terms), instead of `class`. This is because `class` is a reserved keyword in
 JavaScript! The same thing is true for the `for` label, which is another keyword
 in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
 
-## When to Split Content Into Components
-
-_When_ to split JSX content out into individual components is really up to the
-designer, but it is often done
-
-* at logical breaks within the code. A table, for instance, would make sense as a
-self-contained component
-* whenever there is some repeating, dynamic content. A list of multiple comments
-may have different text content, but their structure is consistent, so it can be
-abstracted away into _one_ component that takes in dynamic content for each
-comment
-* whenever the same JSX is needed in multiple places. Maybe an avatar image is
-used in a website's navigation bar _as well as_ in comments. This could be
-_one_ component used in two different parts of the page
-* for readability! You _could_ write an entire React app in _one_ component, but
-by separating chunks of JSX out, it becomes easier to understand and navigate
-the code of a complex web app. In the example `ParentComponent` class above, we
-can see how the other components will be ordered on the page _without_ needing
-to see what is actually inside `<PlainDiv />`, `<Photo />` or `<Table />`
-* for long term reusability. It is possible to write components that are
-abstracted enough, they can be used in multiple projects. Maybe you write a
-sweet navigation bar once and use it for four or five different projects!
-
 ## Conclusion
 
-In the early forms of React, instead of JSX, the code returned in components was
-much less reader friendly. To create a React element, we would write things like this:
+In the early forms of React, instead of JSX, components returned JavaScript that
+was much less reader friendly. To create a React element, we would write things
+like this:
 
 ```js
 React.createElement(
@@ -224,7 +207,9 @@ write code that is semantic and _declarative_. Writing this:
 <h1 className='greeting'>Hello, world!</h1>
 ```
 
-is just much more pleasant.
+is just much more pleasant. When we're building complex applications, where
+components can be children of other components, JSX provides a critical boost to
+readability.
 
 Ultimately, all the JSX code we write will get compiled down to standard
 JavaScript and turn into things like `React.createElement`.
@@ -235,11 +220,9 @@ run-able JavaScript process.
 
 ## Resources
 
-- Webpack: http://webpack.github.io
-- Babel: http://babeljs.io/
-- Babelify: https://github.com/babel/babelify
 - JSX: https://facebook.github.io/react/docs/jsx-in-depth.html
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
 
 [frag]: https://reactjs.org/docs/fragments.html
+[arrowf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
