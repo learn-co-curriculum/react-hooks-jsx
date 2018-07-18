@@ -51,13 +51,13 @@ class Tweet extends Component {
 Whoa, isn't this interesting? It's HTML, but in our JS... with JS _inside the
 HTML!_ Looking at this code, there are some important things to point out:
 
-###### JSX is _not_ a String
+#### JSX is _not_ a String
 
 The JSX in the example is not wrapped in quotes. Think of it as another
 type in JavaScript. **We are not interpolating HTML Strings** like we do with
 standard JavaScript DOM manipulation.
 
-###### JSX is the return value of the `render()` method
+#### JSX is the return value of the `render()` method
 
 Every component you use needs a `render()` method that returns some valid JSX.
 Although our example displays six lines of JSX, this is done for readability
@@ -72,9 +72,9 @@ return (
 )
 ```
 
-###### JSX can include JavaScript
+#### JSX Can Include JavaScript
 
-While writing our pseudo-HTML, JSX, we can also write vanilla JavaScript
+While writing our pseudo-HTML in JSX, we can also write vanilla JavaScript
 _in-line_. We do this by wrapping the JavaScript code in curly braces.
 
 ```js
@@ -116,7 +116,48 @@ this.currentTime().bind(this)
 Without the `.bind(this)`, the _first_ 'this' will refer to whatever object it
 is in when called, which can be a _different_ component.
 
-###### A component must return only one JSX element
+#### JSX Cannot Include _All_ JavaScript Statements
+
+JSX is an extension of JavaScript, wrapping a lot of underlying function calls
+in a syntactically appealing style. This is why JSX code is considered
+_declarative_. When _we're_ writing in JSX, it is equivalent to saying "Make an
+h1 element with this content inside" and letting React work on the element
+creation and function calls. Because we follow the proper syntax, React knows
+that when we write:
+
+```js
+<h1 id="header">Hello!</h1>
+```
+
+The JSX needs to be converted into regular, imperative Javascript:
+
+```js
+React.createElement("h1", {id: "header"}, "Hello!")
+```
+
+Which is then committed to the actual DOM as an 'h1' DOM node.
+
+Due to this, as well as JSX's specific syntax, we aren't able to include just
+_any_ JavaScript statement. For instance, the following will not work in JSX:
+
+```js
+<h1 id="header">{if (true) {
+  "Hello"
+} else {
+  "Goodbye"
+}}</h1>
+```
+
+However, the ternary alternative _does_ work:
+
+```js
+<h1 id="header">{ true ? "Hello" : "Goodbye" }</h1>
+```
+
+There is an easy work around though - you can call class methods in JSX, and
+within these methods, you can include whatever valid JavaScript you'd like.
+
+#### A Component Must Return One JSX Element
 
 In all the lesson examples we've seen so far, each component is returning a
 `div` that contains content or child elements. However, we can actually use any
