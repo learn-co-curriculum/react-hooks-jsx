@@ -1,33 +1,46 @@
-# React JSX
+# JSX and Component Structure
 
 ## Overview
 
-In this lesson, we'll discuss using JSX in our React code.
+In this lesson, we'll discuss using JSX, its syntax and how it is works within
+the context of React components.
 
 ## Objectives
 
-1. Learn JSX
-2. Render a React component using JSX
+1. Take a deeper look at JSX
+2. Explore some of the unique syntax for JSX
+3. Understand what is required to write valid JSX code
 
-## What's JSX?
-Simply put, JSX allows us to write XML in our JavaScript files. Wait, you say, we can already do this! We just save our XML in strings! Yep, but this is different. JSX is where JS and XML/HTML _meet_, creating a very special and extremely productive marriage.
+## What is JSX?
 
-JSX allows us to write React components in JavaScript files in an efficient and expressive manner. Ultimately, JSX looks a lot like the end result we see in the browser (i.e. HTML), and is _much_ faster to write. It'll blow your mind — I promise.
+Simply put, JSX allows us to write HTML-like code in our JavaScript files. JSX
+is a syntax extension of JavaScript that creates a very special and extremely
+productive marriage between HTML and JS.
+
+With JSX, we can write React components in an efficient and expressive manner.
+Ultimately, JSX looks a lot like the end result we see in the browser (i.e.
+HTML), and is _much_ faster to write, especially when incorporating a lot of
+JavaScript and dynamic content.
 
 ![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
 
 ## What does it look like?
 
-A React component written in JSX looks something like this:
+React components return JSX within their `render()` methods:
 
 ```js
-class Tweet extends React.Component {
+class Tweet extends Component {
+
+  currentTime = () => new Date().toString()
+
   render() {
     return (
       <div className="tweet">
         <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
         <div className="tweet__body">
-            <p>We are writing this tweet in JSX. Holy moly!</p>  
+            <p>We are writing this tweet in JSX. Holy moly!</p>
+            <p>{ Math.floor(Math.random()*100) retweets }</p>
+            <p>{ this.currentTime() }</p>
         </div>
       </div>
     );
@@ -35,146 +48,181 @@ class Tweet extends React.Component {
 }
 ```
 
-Isn't this great? Look how readable it is! It's _literally_ HTML, but in our JS! Looking at this code, there are some important things to note. JSX is _not_ a string — it's not in between quotes. Think of it as another type in JavaScript. 
+Whoa, isn't this interesting? It's HTML, but in our JS... with JS _inside the
+HTML!_ Looking at this code, there are some important things to point out:
 
-...Wait, do you hear that? What's that outside the window?
+###### JSX is _not_ a String
 
-![Angry mob](https://media.giphy.com/media/26uf4r3EldfX5Ykqk/giphy.gif)
+The JSX in the example is not wrapped in quotes. Think of it as another
+type in JavaScript. **We are not interpolating HTML Strings** like we do with
+standard JavaScript DOM manipulation.
 
-It's an angry mob! We're mixing HTML and JS! We've created an abomination! _Blasphemy!_
+###### JSX is the return value of the `render()` method
 
-Believe it or not (especially after seeing how cool JSX is), some developers _despise_ using JSX. They think mixing languages like this is something that should never be done. However, if you give it a little bit of time, you'll soon notice that the benefits far outweigh the cost of writing HTML in your JS. We've been doing it all along in the front-end using strings, this is just easier! Our component code is usually tightly intertwined with the representation of said component, so why not house them together in one file? It's convenient!
-
-Once we have our JSX, we'll need to perform an additional step to get this to work in our code. While this is valid JSX code, it's not something that browsers understand. To compile our code into something that the browsers understand, we need to transpile our code down into working JS (ES5 code) that all browsers can handle. More on that later!
-
-## Gotchas
-In the above code, you'll see that we're returning _one_ XML element (the `.tweet` div). JSX always has one, and _only_ one element (that optionally has children, grandchildren, and so on). You'd think we could do something like this:
-
-```js
-return (
-  <p>I am the first paragraph</p>
-  <p>I am the second paragraph</p>
-);
-```
-
-But we can't! We'd have to wrap these two paragraphs in a `div` element:
+Every component you use needs a `render()` method that returns some valid JSX.
+Although our example displays six lines of JSX, this is done for readability
+only. The entire return statement is wrapped in parentheses so it is considered
+one 'chunk' of JSX code, with _one_ top level element.
 
 ```js
 return (
-  <div>
-    <p>I am the first paragraph</p>
-    <p>I am the second paragraph</p>
+  <div  className="tweet">
+    ...
   </div>
-);
+)
 ```
 
-The reason for this becomes abundantly clear when we take a look at the compiled output for the above code sample. This is the same code, but compiled down to regular JS:
+###### JSX can include JavaScript
+
+While writing our pseudo-HTML, JSX, we can also write vanilla JavaScript
+_in-line_. We do this by wrapping the JavaScript code in curly braces.
 
 ```js
-return React.createElement(
-  "div",
-  null,
-  React.createElement(
-    "p",
-    null,
-    "I am the first paragraph"
-  ),
-  React.createElement(
-    "p",
-    null,
-    "I am the second paragraph"
-  )
-);
+<p>{ Math.floor(Math.random()*100) } retweets</p>
+<p>{ this.currentTime() }</p>
 ```
 
-As you can see, it's returning _one_ element with its children. Not being able to just write two `<p>` elements in our earlier code sample now makes sense — returning two values at once in JavaScript is conceptually impossible.
+In the example, we call the `Math.floor()`  and `Math.random()` methods
+directly, which will return a random number when the component is rendered.
 
-Another thing to note is that since we're still writing JS code, we need to avoid using keywords in our code. You might have noticed it already: we're setting HTML classes using the `className` attribute (or prop, in React terms), instead of `class`. This is because `class` is a reserved keyword in JavaScript! The same thing is true for the `for` label, which is another keyword in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
-
-## A Quick Note on Exporting
-
-In addition to JSX, and in-line with general good programming practices, we want to write modular code. That is, we want to split our code up into logical sections/separate files. Let's practice how we do just that in React:
-
-Go ahead and create a `/src` directory in this repository and add `index.js` to it.
-
-Let's practice writing modular code by creating a new file in `/src/components/foo.js` (you'll also need to create the `/src/components/` directory). In that file, we'll add this content:
+We _also_ called a custom function, `currentTime()`, which returns the String
+value of the current date and time. In our example, because `currentTime()` is
+another method within the Tweet class, we must prepend `currentTime()` with
+`this`:
 
 ```js
-export const message = "I am a component!";
+<p>{ this.currentTime() }</p>
 ```
 
-We can import this component in our `index.js` by using `import` and referencing the origin file:
+**Note on Arrow Functions:** Syntax is important here! Since we're using an
+arrow function for `currentTime()`,
 
 ```js
-import { message } from './components/foo';
+currentTime = () => new Date().toString()
 ```
 
-Note that files are always referred to using a relative path (even if they are in the same directory). This way Node knows whether to look for a local module, one found in `node_modules`, or in the global modules.
+...we are _implicitly binding_ the method to the Tweet class. Getting acquainted with
+using [arrow functions][arrowf] now will save headaches later.
 
-Back to the exporting stuff! Using CommonJS, we have two options of exporting things out of our files: either through named exports (exporting multiple things) or a default export (exporting one thing).
-
-### Named exports
-Named exports allow us to export several things at once. This is useful for utility modules or libraries. Exporting several things at once is done by exporting an object. Because we are exporting this object as default without a name, we can assign it any name when we import it (in this case "fruit").
+As we get into _props_ in React, we sometimes need to call functions like
+`currentTime()` in a class _different from its origin_. When this happens,
+**without the arrow function**, we often have to explicitly bind methods to the
+class their _originally from_, causing us to write code like this:
 
 ```js
-// In a file called `fruits.js`
-export default {
-  apple: 'red',
-  banana: 'yellow',
-};
-
-// In a file in the same directory
-import fruit from './fruits';
-console.log(fruit.apple); // prints 'red'
-
-// In another file, also in the same directory
-import { apple } from './fruits';
-console.log(apple); // prints 'red'
+this.currentTime().bind(this)
 ```
 
-When using named exports, we can choose to either import the entire thing and then reference the keys on the exported object, or we can import one specific key.
+Without the `.bind(this)`, the _first_ 'this' will refer to whatever object it
+is in when called, which can be a _different_ component.
 
-### Default export
-A default export means we're exporting just one thing. This is useful for exporting components in their own file, since there's only one thing there: the component itself. Exporting one thing only is done by exporting a reference to what we want to export. You can also inline the value of what you want to export.
+###### A component must return only one JSX element
 
-```js
-// In a file called `Tweet.js`
-import React from 'react';
+In all the lesson examples we've seen so far, each component is returning a
+`div` that contains content or child elements. However, we can actually use any
+HTML element we would normally use to contain content.  The following are all
+valid components:
 
-class Tweet extends React.Component {
+```JavaScript
+class PlainDiv extends Component {
   render() {
-    return (
-      <div className="tweet">
-        <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
-        <div className="tweet__body">
-          <p>We are writing this tweet in JSX. Holy moly!</p>  
-        </div>
-      </div>
-    );
+    return <div>I am one line, so I do not need the parentheses</div>
   }
 }
 
-export default Tweet;
+class Photo extends Component {
+  render() {
+    return (
+        <figure>
+          <img className="image" src="https://s3.amazonaws.com/ironboard-learn/sunglasses.gif" />
+          <figcaption>Whoa</figcaption>
+        </figure>
+    )
+  }
+}
 
-// In a file in the same directory
-import Tweet from './Tweet';
-import ReactDOM from 'react-dom';
+class Table extends Component {
+  render() {
+    return (
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+        <tr>
+          <th>312213</th>
+          <th>Tim Berners-Lee</th>  
+        </tr>
+      </table>
+    )
+  }
+}
 
-ReactDOM.render(
-  <Tweet />,
-  document.getElementById('root')
+class ParentComponent extends Component {
+  render() {
+    return (
+      <main>
+        <PlainDiv />
+        <Photo />
+        <Table />
+      </main>
+    )
+  }
+}
+```
+
+Each of these is a valid component, but _all_ of these components have _one_
+returned JSX element that contains everything else. Without an element that
+wraps the returned JSX in a component, we will get an error. There are _some_
+exceptions to this, such as [React fragments][frag], but most
+often, we will be using the HTML-like JSX elements.
+
+## Avoiding Keywords
+
+One thing to note about JSX is that, since we're still writing JavaScript code,
+we need to avoid using keywords in our code. You might have noticed it already:
+we're setting HTML classes using the `className` attribute (or prop, in React
+terms), instead of `class`. This is because `class` is a reserved keyword in
+JavaScript! The same thing is true for the `for` label, which is another keyword
+in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
+
+## Conclusion
+
+In the early forms of React, instead of JSX, components returned JavaScript that
+was much less reader friendly. To create a React element, we would write things
+like this:
+
+```js
+React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
 );
 ```
 
-You'll mostly be using this method. It's important to correctly export your components, otherwise the tests can't access the code you've written, causing them to fail!
+While JSX introduces some new rules we must follow, the benefit is that we can
+write code that is semantic and _declarative_. Writing this:
 
-## Future labs
-It's very important to know how this stuff works on a high level, because most of the React code nowadays is being compiled in one way or another. However, we don't want to create unnecessary busywork for you. Every lab from now on already has the JSX transforming stuff set up for you. You just need to run `npm install` and `npm start` to execute the JSX --> React run-able JavaScript process. 
+```js
+<h1 className='greeting'>Hello, world!</h1>
+```
+
+is just much more pleasant. When we're building complex applications, where
+components can be children of other components, JSX provides a critical boost to
+readability.
+
+Ultimately, all the JSX code we write will get compiled down to standard
+JavaScript and turn into things like `React.createElement`.
+
+Every lab from now on already has the JSX transforming stuff set up for you. You
+just need to run `npm install` and `npm start` to execute the JSX --> React
+run-able JavaScript process.
 
 ## Resources
-- Webpack: http://webpack.github.io
-- Babel: http://babeljs.io/
-- Babelify: https://github.com/babel/babelify
+
 - JSX: https://facebook.github.io/react/docs/jsx-in-depth.html
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
+
+[frag]: https://reactjs.org/docs/fragments.html
+[arrowf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
