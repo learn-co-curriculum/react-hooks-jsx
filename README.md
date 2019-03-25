@@ -107,7 +107,7 @@ using [arrow functions][arrowf] now will save headaches later.
 As we get into _props_ in React, we sometimes need to call functions like
 `currentTime()` in a class _different from its origin_. When this happens,
 **without the arrow function**, we often have to explicitly bind methods to the
-class their _originally from_, causing us to write code like this:
+class they are _originally from_, causing us to write code like this:
 
 ```js
 this.currentTime().bind(this)
