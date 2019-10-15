@@ -49,9 +49,11 @@ of ordering a sandwich.
   completed sandwich in oven at 300 degrees for five minutes, then bring it to
   me on a plate."
 
-Most of the JavaScript we've written is considered imperative because our code
-is made of explicit steps. In plain JavaScript, to render a `div` element on the
-page we might end up writing something like:
+In general (and to the relief of restaurant staff everywhere), we prefer the
+declarative approach when speaking unless we are speifically instructing someone
+else. Most of the JavaScript we've written is considered imperative because our
+code is made of explicit steps. In plain JavaScript, to render a `div` element
+on the page we might end up writing something like:
 
 ```js
 let div = document.createElement('div')
@@ -59,8 +61,8 @@ div.textContent = "hello world"
 document.body.appendChild(div)
 ```
 
-In JSX, we just need to write _what_ what want, and allow React to figure things
-out behind the scenes:
+Three distinct steps are used here. In JSX, howeer, we just need to write _what_
+what want, and allow React to figure things out behind the scenes:
 
 ```js
 <div>hello world</div>
@@ -176,13 +178,15 @@ that when we write:
 <h1 id="header">Hello!</h1>
 ```
 
-The JSX needs to be converted into regular, imperative Javascript:
+React must convert this JSX into regular, imperative Javascript when
+it renders the component:
 
 ```js
 React.createElement("h1", {id: "header"}, "Hello!")
 ```
 
-Which is then committed to the actual DOM as an 'h1' DOM node.
+Which is then committed to the actual DOM as an `h1` DOM node. We never need
+to see this - all _we_ write is the JSX, `<h1 id="header">Hello!</h1>`.
 
 Due to this, as well as JSX's specific syntax, we aren't able to include just
 _any_ JavaScript statement. For instance, the following will not work in JSX:
