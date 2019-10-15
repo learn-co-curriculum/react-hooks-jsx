@@ -24,7 +24,54 @@ JavaScript and dynamic content.
 
 ![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
 
-## What does it look like?
+## Imperative vs Declarative Programming
+
+JSX uses what is sometimes referred to as a _declarative_ style of programming,
+whereas most of the JavaScript code we've written so far would be considered
+_imperative_. This may be the first time you're encountering these terms, but
+that is okay. To write imperative code is to write code that describes _how_
+something is done in detail. To write declarative code is to write _what_ you
+would like to do.
+
+To further explain, imagine you walk into a local restaurant with the intention
+of ordering a sandwich.
+
+- To order declaratively would be to say something like this: "I would like one
+  toasted ham and cheese sandwich." Rather than worry about the details, you are
+  just saying _what_ you want and letting the restaurant staff handle the
+  details.
+- To order imperatively would mean saying something like this instead: "I would
+  like you to take three slices of ham, two slices of cheese and a jar of
+  mayonaisse from the refrigerator and place them together on a clean counter.
+  Please also find two slices of bread. Stack the ham, cheese and bread in this
+  order: bread, ham, ham, ham, cheese, cheese, bread. Remove the top slice of
+  bread and apply a dollop of mayo. Replace top slice of bread and place
+  completed sandwich in oven at 300 degrees for five minutes, then bring it to
+  me on a plate."
+
+Most of the JavaScript we've written is considered imperative because our code
+is made of explicit steps. In plain JavaScript, to render a `div` element on the
+page we might end up writing something like:
+
+```js
+let div = document.createElement('div')
+div.textContent = "hello world"
+document.body.appendChild(div)
+```
+
+In JSX, we just need to write _what_ what want, and allow React to figure things
+out behind the scenes:
+
+```js
+<div>hello world</div>
+```
+
+React sees this and understands it to be JSX, **not HTML**. While the exact details
+of how it creates the DOM element differ from traditional DOM manipulation, the
+end result is the same: a `div` element added to the page with the text 'hello
+world' inside.
+
+## What JSX Looks Like
 
 React components return JSX within their `render()` methods:
 
