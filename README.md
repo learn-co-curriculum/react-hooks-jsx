@@ -61,8 +61,8 @@ div.textContent = "hello world"
 document.body.appendChild(div)
 ```
 
-Three distinct steps are used here. In JSX, howeer, we just need to write _what_
-what want, and allow React to figure things out behind the scenes:
+Three distinct steps are used here. In JSX, however, we just need to write _what_
+we want, and allow React to figure things out behind the scenes:
 
 ```js
 <div>hello world</div>
