@@ -88,7 +88,7 @@ class Tweet extends Component {
         <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
         <div className="tweet__body">
             <p>We are writing this tweet in JSX. Holy moly!</p>
-            <p>{ Math.floor(Math.random()*100) retweets }</p>
+            <p>{ Math.floor(Math.random()*100)} retweets </p>
             <p>{ this.currentTime() }</p>
         </div>
       </div>
