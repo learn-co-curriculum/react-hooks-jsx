@@ -75,25 +75,23 @@ world' inside.
 
 ## What JSX Looks Like
 
-React components return JSX within their `render()` methods:
+React components return JSX:
 
 ```js
-class Tweet extends Component {
+const Tweet = () => {
 
-  currentTime = () => new Date().toString()
+  const currentTime = () => new Date().toString()
 
-  render() {
-    return (
-      <div className="tweet">
-        <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
-        <div className="tweet__body">
-            <p>We are writing this tweet in JSX. Holy moly!</p>
-            <p>{ Math.floor(Math.random()*100)} retweets </p>
-            <p>{ this.currentTime() }</p>
-        </div>
+  return (
+    <div className="tweet">
+      <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
+      <div className="tweet__body">
+          <p>We are writing this tweet in JSX. Holy moly!</p>
+          <p>{ Math.floor(Math.random()*100)} retweets </p>
+          <p>{ currentTime() }</p>
       </div>
-    );
-  }
+    </div>
+  );
 }
 ```
 
@@ -106,9 +104,9 @@ The JSX in the example is not wrapped in quotes. Think of it as another
 type in JavaScript. **We are not interpolating HTML Strings** like we do with
 standard JavaScript DOM manipulation.
 
-#### JSX is the return value of the `render()` method
+#### JSX is the return value of a function component
 
-Every component you use needs a `render()` method that returns some valid JSX.
+Every function component you use needs to return some valid JSX.
 Although our example displays six lines of JSX, this is done for readability
 only. The entire return statement is wrapped in parentheses so it is considered
 one 'chunk' of JSX code, with _one_ top level element.
@@ -128,42 +126,18 @@ _in-line_. We do this by wrapping the JavaScript code in curly braces.
 
 ```js
 <p>{ Math.floor(Math.random()*100) } retweets</p>
-<p>{ this.currentTime() }</p>
+<p>{ currentTime() }</p>
 ```
 
 In the example, we call the `Math.floor()`  and `Math.random()` methods
 directly, which will return a random number when the component is rendered.
 
 We _also_ called a custom function, `currentTime()`, which returns the String
-value of the current date and time. In our example, because `currentTime()` is
-another method within the Tweet class, we must prepend `currentTime()` with
-`this`:
-
-```js
-<p>{ this.currentTime() }</p>
-```
-
-**Note on Arrow Functions:** Syntax is important here! Since we're using an
-arrow function for `currentTime()`,
-
-```js
-currentTime = () => new Date().toString()
-```
-
-...we are _implicitly binding_ the method to the Tweet class. Getting acquainted with
-using [arrow functions][arrowf] now will save headaches later.
-
-As we get into _props_ in React, we sometimes need to call functions like
-`currentTime()` in a class _different from its origin_. When this happens,
-**without the arrow function**, we often have to explicitly bind methods to the
-class they are _originally from_, causing us to write code like this:
-
-```js
-this.currentTime().bind(this)
-```
-
-Without the `.bind(this)`, the _first_ 'this' will refer to whatever object it
-is in when called, which can be a _different_ component.
+value of the current date and time. In our example, `currentTime()` a function 
+within the Tweet component. It's common to write functions inside React components
+in order to organize functionality based on a component's responsibility 
+(and also give ourselves access to other variables within the function's scope, 
+as we'll see in later lessons).
 
 #### JSX Cannot Include _All_ JavaScript Statements
 
@@ -205,61 +179,52 @@ However, the ternary alternative _does_ work:
 <h1 id="header">{ true ? "Hello" : "Goodbye" }</h1>
 ```
 
-There is an easy work around though - you can call class methods in JSX, and
-within these methods, you can include whatever valid JavaScript you'd like.
+There is an easy work around though - you can call functions in JSX, and
+within these functions, you can include whatever valid JavaScript you'd like.
 
 #### A Component Must Return One JSX Element
 
 In all the lesson examples we've seen so far, each component is returning a
 `div` that contains content or child elements. However, we can actually use any
 HTML element we would normally use to contain content.  The following are all
-valid components:
+valid components (also take note - you can define function components with the
+function keyword, or using arrow functions):
 
 ```JavaScript
-class PlainDiv extends Component {
-  render() {
-    return <div>I am one line, so I do not need the parentheses</div>
-  }
+function PlainDiv() {
+  return <div>I am one line, so I do not need the parentheses</div>
 }
 
-class Photo extends Component {
-  render() {
-    return (
-        <figure>
-          <img className="image" src="https://s3.amazonaws.com/ironboard-learn/sunglasses.gif" />
-          <figcaption>Whoa</figcaption>
-        </figure>
-    )
-  }
+const Photo = () => {
+  return (
+      <figure>
+        <img className="image" src="https://s3.amazonaws.com/ironboard-learn/sunglasses.gif" />
+        <figcaption>Whoa</figcaption>
+      </figure>
+  )
 }
 
-class Table extends Component {
-  render() {
-    return (
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-        </tr>
-        <tr>
-          <th>312213</th>
-          <th>Tim Berners-Lee</th>  
-        </tr>
-      </table>
-    )
-  }
-}
+const Table = () => (
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+    <tr>
+      <th>312213</th>
+      <th>Tim Berners-Lee</th>  
+    </tr>
+  </table>
+)
 
-class ParentComponent extends Component {
-  render() {
-    return (
-      <main>
-        <PlainDiv />
-        <Photo />
-        <Table />
-      </main>
-    )
-  }
+function ParentComponent() {
+  return (
+    <main>
+      <PlainDiv />
+      <Photo />
+      <Table />
+    </main>
+  )
 }
 ```
 
@@ -269,14 +234,12 @@ wraps the returned JSX in a component, we will get an error. There are _some_
 exceptions to this, such as [React fragments][frag], but most
 often, we will be using the HTML-like JSX elements.
 
-## Avoiding Keywords
+## JSX Property Names
 
-One thing to note about JSX is that, since we're still writing JavaScript code,
-we need to avoid using keywords in our code. You might have noticed it already:
-we're setting HTML classes using the `className` attribute (or prop, in React
-terms), instead of `class`. This is because `class` is a reserved keyword in
-JavaScript! The same thing is true for the `for` label, which is another keyword
-in JS. If you want to use the HTML `for` attribute, you'd use `htmlFor` instead.
+You may have noticed that property names in JSX don't match exactly with the
+property names you're used to from HTML. For example, in JSX, we should use
+`className` instead of `class`, and `htmlFor` instead of `for`. If you're curious
+why, [check out this writeup from Dan Abramov](https://github.com/facebook/react/issues/13525#issuecomment-417818906) and the discussion from the React community.
 
 ## Conclusion
 
