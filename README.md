@@ -1,9 +1,9 @@
-# JSX and Component Structure
+# Writing JSX
 
 ## Overview
 
-In this lesson, we'll discuss using JSX, its syntax and how it is works within
-the context of React components.
+In this lesson, we'll discuss using JSX, its syntax, and how React uses JSX to
+create DOM elements.
 
 ## Objectives
 
@@ -17,10 +17,10 @@ Simply put, JSX allows us to write HTML-like code in our JavaScript files. JSX
 is a syntax extension of JavaScript that creates a very special and extremely
 productive marriage between HTML and JS.
 
-With JSX, we can write React components in an efficient and expressive manner.
-Ultimately, JSX looks a lot like the end result we see in the browser (i.e.
-HTML), and is _much_ faster to write, especially when incorporating a lot of
-JavaScript and dynamic content.
+With JSX, we can create DOM elements in JavaScript in an efficient and
+expressive manner. Ultimately, JSX looks a lot like the end result we see in the
+browser (i.e. HTML), and is _much_ faster to write, especially when
+incorporating a lot of JavaScript and dynamic content.
 
 ![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
 
@@ -42,7 +42,7 @@ of ordering a sandwich.
   details.
 - To order imperatively would mean saying something like this instead: "I would
   like you to take three slices of ham, two slices of cheese and a jar of
-  mayonaisse from the refrigerator and place them together on a clean counter.
+  mayonnaise from the refrigerator and place them together on a clean counter.
   Please also find two slices of bread. Stack the ham, cheese and bread in this
   order: bread, ham, ham, ham, cheese, cheese, bread. Remove the top slice of
   bread and apply a dollop of mayo. Replace top slice of bread and place
@@ -50,73 +50,83 @@ of ordering a sandwich.
   me on a plate."
 
 In general (and to the relief of restaurant staff everywhere), we prefer the
-declarative approach when speaking unless we are speifically instructing someone
+declarative approach when speaking unless we are specifically instructing someone
 else. Most of the JavaScript we've written is considered imperative because our
 code is made of explicit steps. In plain JavaScript, to render a `div` element
 on the page we might end up writing something like:
 
 ```js
-let div = document.createElement('div')
-div.textContent = "hello world"
-document.body.appendChild(div)
+const div = document.createElement("div");
+div.id = "card1";
+div.className = "card";
+div.textContent = "hello world";
+document.body.appendChild(div);
 ```
 
 Three distinct steps are used here. In JSX, however, we just need to write _what_
 we want, and allow React to figure things out behind the scenes:
 
 ```js
-<div>hello world</div>
+const div = <div id="card1" className="card">hello world</div>;
+
+ReactDOM.render(div, document.body))
 ```
 
-React sees this and understands it to be JSX, **not HTML**. While the exact details
-of how it creates the DOM element differ from traditional DOM manipulation, the
-end result is the same: a `div` element added to the page with the text 'hello
-world' inside.
+When we run this code through Babel (used with React), Babel sees this and
+understands it to be JSX, **not HTML**. While the exact details of how it
+creates the DOM element differ from traditional DOM manipulation, the end result
+is the same: a `div` element added to the page with the text 'hello world'
+inside.
+
+> If you're ever curious about what's being output by Babel after it transpiles
+> our JSX, try pasting your code into the
+> [Babel REPL](https://babeljs.io/en/repl) to see what the transpiled JavaScript
+> looks like!
 
 ## What JSX Looks Like
 
 React components return JSX:
 
 ```js
-const Tweet = () => {
+function Tweet() {
+  const currentTime = () => new Date().toString();
 
-  const currentTime = () => new Date().toString()
-
+  // this returns JSX!
   return (
     <div className="tweet">
       <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
       <div className="tweet__body">
-          <p>We are writing this tweet in JSX. Holy moly!</p>
-          <p>{ Math.floor(Math.random()*100)} retweets </p>
-          <p>{ currentTime() }</p>
+        <p>We are writing this tweet in JSX. Holy moly!</p>
+        <p>{Math.floor(Math.random() * 100)} retweets </p>
+        <p>{currentTime()}</p>
       </div>
     </div>
   );
 }
 ```
 
-Whoa, isn't this interesting? It's HTML, but in our JS... with JS _inside the
-HTML!_ Looking at this code, there are some important things to point out:
+Whoa, isn't this interesting? It's HTML, but in our JavaScript... with
+JavaScript _inside the HTML!_ Looking at this code, there are some important
+things to point out:
 
 #### JSX is _not_ a String
 
 The JSX in the example is not wrapped in quotes. Think of it as another
-type in JavaScript. **We are not interpolating HTML Strings** like we do with
+type in JavaScript. **We are not interpolating HTML strings** like we do with
 standard JavaScript DOM manipulation.
 
-#### JSX is the return value of a function component
+#### JSX is the Return Value of a Function Component
 
-Every function component you use needs to return some valid JSX.
-Although our example displays six lines of JSX, this is done for readability
-only. The entire return statement is wrapped in parentheses so it is considered
-one 'chunk' of JSX code, with _one_ top level element.
+A function component **must return JSX**.
+
+Every function component you use needs
+to return one JSX element. Although our example displays six lines of JSX, this
+is done for readability only. The entire return statement is wrapped in
+parentheses so it is considered one 'chunk' of JSX code, with _one_ top level
+element.
 
 ```js
-return (
-  <div  className="tweet">
-    ...
-  </div>
-)
+return <div className="tweet">{/*child elements in here*/}</div>;
 ```
 
 #### JSX Can Include JavaScript
@@ -129,17 +139,17 @@ _in-line_. We do this by wrapping the JavaScript code in curly braces.
 <p>{ currentTime() }</p>
 ```
 
-In the example, we call the `Math.floor()`  and `Math.random()` methods
+In the example, we call the `Math.floor()` and `Math.random()` methods
 directly, which will return a random number when the component is rendered.
 
 We _also_ called a custom function, `currentTime()`, which returns the String
-value of the current date and time. In our example, `currentTime()` a function 
-within the Tweet component. It's common to write functions inside React components
-in order to organize functionality based on a component's responsibility 
-(and also give ourselves access to other variables within the function's scope, 
-as we'll see in later lessons).
+value of the current date and time. In our example, `currentTime()` a function
+within the `Tweet` component. It's common to write functions inside React
+components in order to organize functionality based on a component's
+responsibility (and also give ourselves access to other variables within the
+function's scope, as we'll see in later lessons).
 
-#### JSX Cannot Include _All_ JavaScript Statements
+#### JSX Works With Expressions, Not Statements
 
 JSX is an extension of JavaScript, wrapping a lot of underlying function calls
 in a syntactically appealing style. This is why JSX code is considered
@@ -156,14 +166,15 @@ React must convert this JSX into regular, imperative Javascript when
 it renders the component:
 
 ```js
-React.createElement("h1", {id: "header"}, "Hello!")
+React.createElement("h1", { id: "header" }, "Hello!");
 ```
 
 Which is then committed to the actual DOM as an `h1` DOM node. We never need
 to see this - all _we_ write is the JSX, `<h1 id="header">Hello!</h1>`.
 
-Due to this, as well as JSX's specific syntax, we aren't able to include just
-_any_ JavaScript statement. For instance, the following will not work in JSX:
+Due to this, as well as JSX's specific syntax, we aren't able to write
+[_statements_ in JSX, only _expressions_][expressions vs statements]. For
+instance, the following `if` statement will not work in JSX:
 
 ```js
 <h1 id="header">{if (true) {
@@ -173,20 +184,60 @@ _any_ JavaScript statement. For instance, the following will not work in JSX:
 }}</h1>
 ```
 
-However, the ternary alternative _does_ work:
+However, the ternary expression _does_ work:
 
 ```js
-<h1 id="header">{ true ? "Hello" : "Goodbye" }</h1>
+<h1 id="header">{true ? "Hello" : "Goodbye"}</h1>
 ```
 
-There is an easy work around though - you can call functions in JSX, and
-within these functions, you can include whatever valid JavaScript you'd like.
+You can also call functions from within JSX, if you need to write statements:
+
+```js
+function getHeaderText(isHello) {
+  if (isHello) {
+    return "Hello";
+  } else {
+    return "Goodbye";
+  }
+}
+
+<h1 id="header">{getHeaderText(true)}</h1>;
+```
+
+### A Component Can Render Another Component Using JSX
+
+If we have a component (a function that returns JSX), like this:
+
+```js
+function Header() {
+  return <h1>Hello</h1>;
+}
+```
+
+We can embed that component inside another component using JSX:
+
+```js
+function Page() {
+  return (
+    <div>
+      <Header />
+      <p>Some great content in here</p>
+    </div>
+  );
+}
+```
+
+When we're writing _HTML elements_ in JSX, the element names must be
+_lowercase_, just like we typically write normal HTML elements. When we're
+writing _components_ in JSX, the name of the component must be _uppercase_. This
+is how React can differentiate our `<Header>` component from a normal HTML
+`<header>` element.
 
 #### A Component Must Return One JSX Element
 
 In all the lesson examples we've seen so far, each component is returning a
 `div` that contains content or child elements. However, we can actually use any
-HTML element we would normally use to contain content.  The following are all
+HTML element we would normally use to contain content. The following are all
 valid components (also take note - you can define function components with the
 function keyword, or using arrow functions):
 
@@ -212,7 +263,7 @@ const Table = () => (
     </tr>
     <tr>
       <th>312213</th>
-      <th>Tim Berners-Lee</th>  
+      <th>Tim Berners-Lee</th>
     </tr>
   </table>
 )
@@ -238,8 +289,10 @@ often, we will be using the HTML-like JSX elements.
 
 You may have noticed that property names in JSX don't match exactly with the
 property names you're used to from HTML. For example, in JSX, we should use
-`className` instead of `class`, and `htmlFor` instead of `for`. If you're curious
-why, [check out this writeup from Dan Abramov](https://github.com/facebook/react/issues/13525#issuecomment-417818906) and the discussion from the React community.
+`className` instead of `class`, and `htmlFor` instead of `for`. If you're
+curious why, [check out this writeup from Dan Abramov][classname vs class] and
+the discussion from the React community. For a full list of the differences,
+have a look at the [React docs on DOM Elements][elements in react].
 
 ## Conclusion
 
@@ -248,36 +301,31 @@ was much less reader friendly. To create a React element, we would write things
 like this:
 
 ```js
-React.createElement(
-  'h1',
-  {className: 'greeting'},
-  'Hello, world!'
-);
+React.createElement("h1", { className: "greeting" }, "Hello, world!");
 ```
 
 While JSX introduces some new rules we must follow, the benefit is that we can
 write code that is semantic and _declarative_. Writing this:
 
 ```js
-<h1 className='greeting'>Hello, world!</h1>
+<h1 className="greeting">Hello, world!</h1>
 ```
 
-is just much more pleasant. When we're building complex applications, where
+... is just much more pleasant. When we're building complex applications, where
 components can be children of other components, JSX provides a critical boost to
 readability.
 
 Ultimately, all the JSX code we write will get compiled down to standard
 JavaScript and turn into things like `React.createElement`.
 
-Every lab from now on already has the JSX transforming stuff set up for you. You
-just need to run `npm install` and `npm start` to execute the JSX --> React
-run-able JavaScript process.
-
 ## Resources
 
-- JSX: https://facebook.github.io/react/docs/jsx-in-depth.html
+- [React Docs: JSX](https://reactjs.org/docs/introducing-jsx.html)
+- [Expressions vs Statements][expressions vs statements]
 
 <p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
 
 [frag]: https://reactjs.org/docs/fragments.html
-[arrowf]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+[expressions vs statements]: https://2ality.com/2012/09/expressions-vs-statements.html
+[classname vs class]: https://github.com/facebook/react/issues/13525#issuecomment-417818906
+[elements in react]: https://reactjs.org/docs/dom-elements.html
