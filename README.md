@@ -79,9 +79,8 @@ is the same: a `div` element added to the page with the text 'hello world'
 inside.
 
 > If you're ever curious about what's being output by Babel after it transpiles
-> our JSX, try pasting your code into the
-> [Babel REPL](https://babeljs.io/en/repl) to see what the transpiled JavaScript
-> looks like!
+> our JSX, try pasting your code into the [Babel REPL][babel repl] to see what
+> the transpiled JavaScript looks like!
 
 ## What JSX Looks Like
 
@@ -109,13 +108,13 @@ Whoa, isn't this interesting? It's HTML, but in our JavaScript... with
 JavaScript _inside the HTML!_ Looking at this code, there are some important
 things to point out:
 
-#### JSX is _not_ a String
+### JSX is _not_ a String
 
 The JSX in the example is not wrapped in quotes. Think of it as another
 type in JavaScript. **We are not interpolating HTML strings** like we do with
 standard JavaScript DOM manipulation.
 
-#### JSX is the Return Value of a Function Component
+### JSX is the Return Value of a Function Component
 
 A function component **must return JSX**.
 
@@ -129,7 +128,7 @@ element.
 return <div className="tweet">{/*child elements in here*/}</div>;
 ```
 
-#### JSX Can Include JavaScript
+### JSX Can Include JavaScript
 
 While writing our pseudo-HTML in JSX, we can also write vanilla JavaScript
 _in-line_. We do this by wrapping the JavaScript code in curly braces.
@@ -149,7 +148,7 @@ components in order to organize functionality based on a component's
 responsibility (and also give ourselves access to other variables within the
 function's scope, as we'll see in later lessons).
 
-#### JSX Works With Expressions, Not Statements
+### JSX Works With Expressions, Not Statements
 
 JSX is an extension of JavaScript, wrapping a lot of underlying function calls
 in a syntactically appealing style. This is why JSX code is considered
@@ -233,7 +232,7 @@ writing _components_ in JSX, the name of the component must be _uppercase_. This
 is how React can differentiate our `<Header>` component from a normal HTML
 `<header>` element.
 
-#### A Component Must Return One JSX Element
+### A Component Must Return One JSX Element
 
 In all the lesson examples we've seen so far, each component is returning a
 `div` that contains content or child elements. However, we can actually use any
@@ -241,19 +240,22 @@ HTML element we would normally use to contain content. The following are all
 valid components (also take note - you can define function components with the
 function keyword, or using arrow functions):
 
-```JavaScript
+```js
 function PlainDiv() {
-  return <div>I am one line, so I do not need the parentheses</div>
+  return <div>I am one line, so I do not need the parentheses</div>;
 }
 
 const Photo = () => {
   return (
-      <figure>
-        <img className="image" src="https://s3.amazonaws.com/ironboard-learn/sunglasses.gif" />
-        <figcaption>Whoa</figcaption>
-      </figure>
-  )
-}
+    <figure>
+      <img
+        className="image"
+        src="https://s3.amazonaws.com/ironboard-learn/sunglasses.gif"
+      />
+      <figcaption>Whoa</figcaption>
+    </figure>
+  );
+};
 
 const Table = () => (
   <table>
@@ -266,7 +268,7 @@ const Table = () => (
       <th>Tim Berners-Lee</th>
     </tr>
   </table>
-)
+);
 
 function ParentComponent() {
   return (
@@ -275,7 +277,7 @@ function ParentComponent() {
       <Photo />
       <Table />
     </main>
-  )
+  );
 }
 ```
 
@@ -323,8 +325,7 @@ JavaScript and turn into things like `React.createElement`.
 - [React Docs: JSX](https://reactjs.org/docs/introducing-jsx.html)
 - [Expressions vs Statements][expressions vs statements]
 
-<p class='util--hide'>View <a href='https://learn.co/lessons/react-jsx'>JSX</a> on Learn.co and start learning to code for free.</p>
-
+[babel repl]: https://babeljs.io/en/repl
 [frag]: https://reactjs.org/docs/fragments.html
 [expressions vs statements]: https://2ality.com/2012/09/expressions-vs-statements.html
 [classname vs class]: https://github.com/facebook/react/issues/13525#issuecomment-417818906
