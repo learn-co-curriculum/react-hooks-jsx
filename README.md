@@ -169,7 +169,11 @@ React.createElement("h1", { id: "header" }, "Hello!");
 ```
 
 Which is then committed to the actual DOM as an `h1` DOM node. We never need
-to see this - all _we_ write is the JSX, `<h1 id="header">Hello!</h1>`.
+to see this - all _we_ write is the JSX:
+
+```jsx
+<h1 id="header">Hello!</h1>
+```
 
 Due to this, as well as JSX's specific syntax, we aren't able to write
 [_statements_ in JSX, only _expressions_][expressions vs statements]. For
