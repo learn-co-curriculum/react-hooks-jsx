@@ -188,7 +188,7 @@ React.createElement("h1", { id: "header" }, "Hello!");
 ```
 
 Which is then committed to the actual DOM as an `h1` DOM node. We never need to
-see this &mdash; all _we_ write is the JSX:
+see this — all _we_ write is the JSX:
 
 ```js
 <h1 id="header">Hello!</h1>
