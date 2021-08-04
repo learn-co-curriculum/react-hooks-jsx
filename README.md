@@ -18,8 +18,6 @@ we see in the browser (i.e. HTML), and is _much_ faster to write compared to
 creating DOM elements using something like `document.createElement()`,
 especially when incorporating a lot of JavaScript and dynamic content.
 
-![Using JSX](https://media.giphy.com/media/l4HnT4tZzUozNFx4s/giphy.gif)
-
 ## Imperative vs Declarative Programming
 
 JSX uses what is referred to as a _declarative_ style of programming, whereas
@@ -63,7 +61,7 @@ document.body.appendChild(div);
 Five distinct steps are used here. In JSX, however, we just need to write _what_
 we want, and allow React to figure things out behind the scenes:
 
-```js
+```jsx
 const div = (
   <div id="card1" className="card">
     hello world
@@ -102,7 +100,7 @@ to the page with the text 'hello world' inside.
 
 React components return JSX:
 
-```js
+```jsx
 function Tweet() {
   const currentTime = new Date().toString();
 
@@ -139,7 +137,7 @@ example displays six lines of JSX, this is done for readability only. The entire
 return statement is wrapped in parentheses so it is considered one 'chunk' of
 JSX code, with _one_ top level element:
 
-```js
+```jsx
 return <div className="tweet">{/*child elements in here*/}</div>;
 ```
 
@@ -148,7 +146,7 @@ return <div className="tweet">{/*child elements in here*/}</div>;
 While writing our pseudo-HTML in JSX, we can also write vanilla JavaScript
 _in-line_. We do this by wrapping the JavaScript code in **curly braces**.
 
-```js
+```jsx
 <p>{ Math.floor(Math.random()*100) } retweets</p>
 <p>{ currentTime }</p>
 ```
@@ -176,7 +174,7 @@ h1 element with this content inside" and letting React work on the element
 creation and function calls. Because we follow the proper syntax, React knows
 that when we write:
 
-```js
+```jsx
 <h1 id="header">Hello!</h1>
 ```
 
@@ -190,7 +188,7 @@ React.createElement("h1", { id: "header" }, "Hello!");
 Which is then committed to the actual DOM as an `h1` DOM node. We never need to
 see this — all _we_ write is the JSX:
 
-```js
+```jsx
 <h1 id="header">Hello!</h1>
 ```
 
@@ -198,7 +196,7 @@ Due to this, as well as JSX's specific syntax, we aren't able to write
 [**statements** in JSX, only **expressions**][expressions vs statements]. For
 instance, the following `if` **statement** will not work in JSX:
 
-```js
+```jsx
 <h1 id="header">{if (true) {
   "Hello"
 } else {
@@ -208,14 +206,14 @@ instance, the following `if` **statement** will not work in JSX:
 
 However, the ternary **expression** does work:
 
-```js
+```jsx
 <h1 id="header">{true ? "Hello" : "Goodbye"}</h1>
 ```
 
 You can also call functions from within JSX, if you need to express your code
 with an `if` statement:
 
-```js
+```jsx
 function getHeaderText(isHello) {
   if (isHello) {
     return "Hello";
@@ -231,7 +229,7 @@ function getHeaderText(isHello) {
 
 If we have a component (a function that returns JSX), like this:
 
-```js
+```jsx
 function Header() {
   return <h1>Hello</h1>;
 }
@@ -239,7 +237,7 @@ function Header() {
 
 We can embed that component inside another component using JSX:
 
-```js
+```jsx
 function Page() {
   return (
     <div>
@@ -263,7 +261,7 @@ In all the lesson examples we've seen so far, each component is returning a
 HTML element we would normally use to contain content. The following are all
 valid components:
 
-```js
+```jsx
 function PlainDiv() {
   return <div>I am one line, so I do not need the parentheses</div>;
 }
@@ -333,7 +331,7 @@ React.createElement("h1", { className: "greeting" }, "Hello, world!");
 While JSX introduces some new rules we must follow, the benefit is that we can
 write code that is semantic and _declarative_. Writing this:
 
-```js
+```jsx
 <h1 className="greeting">Hello, world!</h1>
 ```
 
