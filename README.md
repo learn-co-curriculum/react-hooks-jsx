@@ -132,7 +132,7 @@ JavaScript. **We are not interpolating HTML strings** like we do with
 
 A function component **must return JSX**.
 
-Every function component you use needs to return one JSX element. Although our
+Every function component you use needs to return _one_ JSX element. Although our
 example displays six lines of JSX, this is done for readability only. The entire
 return statement is wrapped in parentheses so it is considered one 'chunk' of
 JSX code, with _one_ top level element:
@@ -155,11 +155,9 @@ In the example, we call the `Math.floor()` and `Math.random()` methods
 directly, which will return a random number when the component is rendered.
 
 We _also_ used a variable, `currentTime`, which holds the String value of the
-current date and time. In our example, `currentTime` a variable within the
+current date and time. In our example, `currentTime` is a variable within the
 `Tweet` component. It's common to write variables inside React components in
-order to organize functionality based on a component's responsibility (and also
-give ourselves access to other variables within the function's scope, as we'll
-see in later lessons).
+order to organize functionality based on a component's responsibility.
 
 **Keep this in mind**: Any time you want to use JavaScript variables or call
 functions from within a JSX element, you must use curly braces like we did in
@@ -178,7 +176,7 @@ that when we write:
 <h1 id="header">Hello!</h1>
 ```
 
-Babel must convert this JSX into regular, imperative Javascript before React
+Babel must convert this JSX into regular, imperative JavaScript before React
 renders the component:
 
 ```js
@@ -192,9 +190,9 @@ see this — all _we_ write is the JSX:
 <h1 id="header">Hello!</h1>
 ```
 
-Due to this, as well as JSX's specific syntax, we aren't able to write
-[**statements** in JSX, only **expressions**][expressions vs statements]. For
-instance, the following `if` **statement** will not work in JSX:
+In order for React to know that our JSX needs to be converted into regular
+JavaScript, the JSX we write [must be in the form of an **expression**, not a **statement**][expressions vs statements]. For instance, the following `if`
+**statement** will not work in JSX:
 
 ```jsx
 <h1 id="header">{if (true) {
@@ -248,10 +246,10 @@ function Page() {
 }
 ```
 
-When we're writing _HTML elements_ in JSX, the element names must be
+When we're writing _HTML elements_ in JSX, the element names must be all
 _lowercase_, just like we typically write normal HTML elements. When we're
-writing _components_ in JSX, the name of the component must be _uppercase_. This
-is how React can differentiate our `<Header>` component from a normal HTML
+writing _components_ in JSX, the name of the component must be _capitalized_.
+This is how React can differentiate our `<Header>` component from a normal HTML
 `<header>` element.
 
 ### A Component Must Return One JSX Element
