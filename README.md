@@ -8,9 +8,12 @@
 
 ## What is JSX?
 
-Simply put, JSX allows us to write HTML-like code in our JavaScript files. JSX
-is a syntax extension of JavaScript that creates a very special and extremely
-productive marriage between HTML and JS.
+JSX allows us to write HTML-like code in our JavaScript files. JSX is a syntax
+extension of JavaScript that creates a very special and extremely productive
+marriage between HTML and JS. It's short for [JavaScript XML][js xml], and was
+created by Facebook to work hand-in-hand with React.
+
+[js xml]: https://facebook.github.io/jsx/
 
 With JSX, we can instruct React to create DOM elements in JavaScript in an
 efficient and expressive manner. Ultimately, JSX looks a lot like the end result
