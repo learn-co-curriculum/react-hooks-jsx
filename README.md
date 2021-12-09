@@ -194,8 +194,9 @@ see this — all _we_ write is the JSX:
 ```
 
 In order for React to know that our JSX needs to be converted into regular
-JavaScript, the JSX we write [must be in the form of an **expression**, not a **statement**][expressions vs statements]. For instance, the following `if`
-**statement** will not work in JSX:
+JavaScript, the JSX we write
+[must be in the form of an **expression**, not a **statement**][expressions vs statements].
+For instance, the following `if` **statement** will not work in JSX:
 
 ```jsx
 <h1 id="header">{if (true) {
