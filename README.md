@@ -13,8 +13,6 @@ extension of JavaScript that creates a very special and extremely productive
 marriage between HTML and JS. It's short for [JavaScript XML][js xml], and was
 created by Facebook to work hand-in-hand with React.
 
-[js xml]: https://facebook.github.io/jsx/
-
 With JSX, we can instruct React to create DOM elements in JavaScript in an
 efficient and expressive manner. Ultimately, JSX looks a lot like the end result
 we see in the browser (i.e. HTML), and is _much_ faster to write compared to
@@ -24,10 +22,11 @@ especially when incorporating a lot of JavaScript and dynamic content.
 ## Imperative vs Declarative Programming
 
 JSX uses what is referred to as a _declarative_ style of programming, whereas
-most of the JavaScript code we've written so far would be considered
-_imperative_. To write imperative code is to write code that describes _how_
-something is done in detail. To write declarative code is to write _what_ you
-would like to do.
+creating DOM elements using "vanilla" JavaScript methods like
+`document.createElement` would be considered _imperative_.
+
+To write imperative code is to write code that describes _how_ something is done
+in detail. To write declarative code is to write _what_ you would like to do.
 
 To further explain, imagine you walk into a local restaurant with the intention
 of ordering a sandwich.
@@ -46,12 +45,12 @@ of ordering a sandwich.
   me on a plate."
 
 In general (and to the relief of restaurant staff everywhere), we prefer the
-declarative approach when speaking unless we are specifically instructing someone
-else.
+declarative approach when speaking unless we are specifically instructing
+someone else.
 
-Most of the JavaScript we've written is considered **imperative** because our
-code is made of explicit steps. In plain JavaScript, to render a `div` element
-on the page we might end up writing something like:
+Creating DOM elements using "vanilla" JavaScript is considered **imperative**
+because we write code for each step explicitly. In plain JavaScript, to render a
+`div` element on the page, we might end up writing something like:
 
 ```js
 const div = document.createElement("div");
@@ -61,8 +60,8 @@ div.textContent = "hello world";
 document.body.appendChild(div);
 ```
 
-Five distinct steps are used here. In JSX, however, we just need to write _what_
-we want, and allow React to figure things out behind the scenes:
+Five distinct steps are used here. With JSX, however, we just need to write
+_what_ we want, and allow React to figure things out behind the scenes:
 
 ```jsx
 const div = (
@@ -73,6 +72,13 @@ const div = (
 
 ReactDOM.render(div, document.body);
 ```
+
+Both of the examples above will produce a `<div>` element with the appropriate
+class, id, and text content, but the JSX example is significantly cleaner.
+
+How does this work under the hood? The JSX code above isn't valid JavaScript
+(JSX is a _syntax extension_, not part of the language), so an intermediate step
+needs to happen before React can run our code.
 
 When we run this code through Babel (used with React), Babel sees this and
 understands it to be JSX, **not HTML**. Babel can then **transpile** this code
@@ -90,6 +96,10 @@ const div = React.createElement(
 
 ReactDOM.render(div, document.body);
 ```
+
+React's `createElement` method then takes the parameters provided and creates
+the actual DOM elements, using similar vanilla JavaScript methods like
+`document.createElement` under the hood.
 
 While the exact details of how it creates the DOM element differ from
 traditional DOM manipulation, the end result is the same: a `div` element added
@@ -136,9 +146,9 @@ JavaScript. **We are not interpolating HTML strings** like we do with
 A function component **must return JSX**.
 
 Every function component you use needs to return _one_ JSX element. Although our
-example displays six lines of JSX, this is done for readability only. The entire
-return statement is wrapped in parentheses so it is considered one 'chunk' of
-JSX code, with _one_ top level element:
+example displays eight lines of JSX, this is done for readability only. The
+entire return statement is wrapped in parentheses so it is considered one
+'chunk' of JSX code, with _one_ top level element:
 
 ```jsx
 return <div className="tweet">{/*child elements in here*/}</div>;
@@ -154,17 +164,28 @@ _in-line_. We do this by wrapping the JavaScript code in **curly braces**.
 <p>{ currentTime }</p>
 ```
 
-In the example, we call the `Math.floor()` and `Math.random()` methods
-directly, which will return a random number when the component is rendered.
+In the example, we call the `Math.floor()` and `Math.random()` methods directly,
+which will return a random number when the component is rendered.
 
 We _also_ used a variable, `currentTime`, which holds the String value of the
 current date and time. In our example, `currentTime` is a variable within the
 `Tweet` component. It's common to write variables inside React components in
 order to organize functionality based on a component's responsibility.
 
+This is similar to how we use curly braces when interpolating variables into
+strings:
+
+```js
+const myString = `The temperature today is ${getTemperature()}`;
+```
+
+In both JSX and string interpolation, curly braces are an "escape hatch" in the
+syntax. Curly braces allow us to use variables/functions within the JSX to make
+our templates dynamic.
+
 **Keep this in mind**: Any time you want to use JavaScript variables or call
-functions from within a JSX element, you must use curly braces like we did in
-the example above.
+functions from within a JSX element, **you must use curly braces** like we did
+in the example above.
 
 ### JSX Works With Expressions, Not Statements
 
@@ -193,10 +214,10 @@ see this — all _we_ write is the JSX:
 <h1 id="header">Hello!</h1>
 ```
 
-In order for React to know that our JSX needs to be converted into regular
-JavaScript, the JSX we write
-[must be in the form of an **expression**, not a **statement**][expressions vs statements].
-For instance, the following `if` **statement** will not work in JSX:
+In order for our JSX to be converted into regular JavaScript, the JSX we write
+[must be in the form of an **expression**, not a
+**statement**][expressions vs statements]. For instance, the following `if`
+**statement** is not valid in JSX:
 
 ```jsx
 <h1 id="header">{if (true) {
@@ -212,19 +233,24 @@ However, the ternary **expression** does work:
 <h1 id="header">{true ? "Hello" : "Goodbye"}</h1>
 ```
 
+The reason for this is that statements don't have a return value, and
+expressions do.
+
 You can also call functions from within JSX, if you need to express your code
 with an `if` statement:
 
 ```jsx
-function getHeaderText(isHello) {
-  if (isHello) {
-    return "Hello";
-  } else {
-    return "Goodbye";
+function Header() {
+  function getHeaderText(isHello) {
+    if (isHello) {
+      return "Hello";
+    } else {
+      return "Goodbye";
+    }
   }
-}
 
-<h1 id="header">{getHeaderText(true)}</h1>;
+  return <h1 id="header">{getHeaderText(true)}</h1>;
+}
 ```
 
 ### A Component Can Render Another Component Using JSX
@@ -342,15 +368,18 @@ components can be children of other components, JSX provides a critical boost to
 readability.
 
 Ultimately, all the JSX code we write will get compiled down to standard
-JavaScript and turn into things like `React.createElement`.
+JavaScript and turn into things like `React.createElement` thanks to Babel.
 
 ## Resources
 
 - [React Docs: JSX](https://reactjs.org/docs/introducing-jsx.html)
 - [Expressions vs Statements][expressions vs statements]
 
+[js xml]: https://facebook.github.io/jsx/
 [babel repl]: https://babeljs.io/en/repl
 [frag]: https://reactjs.org/docs/fragments.html
-[expressions vs statements]: https://2ality.com/2012/09/expressions-vs-statements.html
-[classname vs class]: https://github.com/facebook/react/issues/13525#issuecomment-417818906
+[expressions vs statements]:
+  https://2ality.com/2012/09/expressions-vs-statements.html
+[classname vs class]:
+  https://github.com/facebook/react/issues/13525#issuecomment-417818906
 [elements in react]: https://reactjs.org/docs/dom-elements.html
