@@ -50,30 +50,30 @@ someone else.
 
 Creating DOM elements using "vanilla" JavaScript is considered **imperative**
 because we write code for each step explicitly. In plain JavaScript, to render a
-`div` element on the page, we might end up writing something like:
+`article` element on the page, we might end up writing something like:
 
 ```js
-const div = document.createElement("div");
-div.id = "card1";
-div.className = "card";
-div.textContent = "hello world";
-document.body.appendChild(div);
+const article = document.createElement("article");
+article.id = "card1";
+article.className = "card";
+article.textContent = "hello world";
+document.body.appendChild(article);
 ```
 
 Five distinct steps are used here. With JSX, however, we just need to write
 _what_ we want, and allow React to figure things out behind the scenes:
 
 ```jsx
-const div = (
-  <div id="card1" className="card">
+const article = (
+  <article id="card1" className="card">
     hello world
-  </div>
+  </article>
 );
 
-ReactDOM.render(div, document.body);
+ReactDOM.render(article, document.body);
 ```
 
-Both of the examples above will produce a `<div>` element with the appropriate
+Both of the examples above will produce a `<article>` element with the appropriate
 class, id, and text content, but the JSX example is significantly cleaner.
 
 How does this work under the hood? The JSX code above isn't valid JavaScript
@@ -85,8 +85,8 @@ understands it to be JSX, **not HTML**. Babel can then **transpile** this code
 into valid JavaScript, which instructs React how to create this element:
 
 ```js
-const div = React.createElement(
-  "div",
+const article = React.createElement(
+  "article",
   {
     id: "card1",
     className: "card",
@@ -94,7 +94,7 @@ const div = React.createElement(
   "hello world"
 );
 
-ReactDOM.render(div, document.body);
+ReactDOM.render(article, document.body);
 ```
 
 React's `createElement` method then takes the parameters provided and creates
@@ -102,7 +102,7 @@ the actual DOM elements, using similar vanilla JavaScript methods like
 `document.createElement` under the hood.
 
 While the exact details of how it creates the DOM element differ from
-traditional DOM manipulation, the end result is the same: a `div` element added
+traditional DOM manipulation, the end result is the same: a `article` element added
 to the page with the text 'hello world' inside.
 
 > If you're ever curious about what's being output by Babel after it transpiles
@@ -119,14 +119,14 @@ function Tweet() {
 
   // this returns JSX!
   return (
-    <div className="tweet">
+    <article className="tweet">
       <img src="http://twitter.com/some-avatar.png" className="tweet__avatar" />
-      <div className="tweet__body">
+      <section className="tweet__body">
         <p>We are writing this tweet in JSX. Holy moly!</p>
         <p>{Math.floor(Math.random() * 100)} retweets </p>
         <p>{currentTime}</p>
-      </div>
-    </div>
+      </section>
+    </article>
   );
 }
 ```
@@ -151,7 +151,7 @@ entire return statement is wrapped in parentheses so it is considered one
 'chunk' of JSX code, with _one_ top level element:
 
 ```jsx
-return <div className="tweet">{/*child elements in here*/}</div>;
+return <article className="tweet">{/*child elements in here*/}</article>;
 ```
 
 ### JSX Can Include JavaScript
@@ -268,10 +268,10 @@ We can embed that component inside another component using JSX:
 ```jsx
 function Page() {
   return (
-    <div>
+    <section>
       <Header />
       <p>Some great content in here</p>
-    </div>
+    </section>
   );
 }
 ```
@@ -285,13 +285,13 @@ This is how React can differentiate our `<Header>` component from a normal HTML
 ### A Component Must Return One JSX Element
 
 In all the lesson examples we've seen so far, each component is returning a
-`div` that contains content or child elements. However, we can actually use any
-HTML element we would normally use to contain content. The following are all
-valid components:
+wrapping HTML Element like `section` or `article` that contains content or
+child elements. However, we can actually use any HTML element we would
+normally use to contain content. The following are all valid components:
 
 ```jsx
-function PlainDiv() {
-  return <div>I am one line, so I do not need the parentheses</div>;
+function PlainParagraph() {
+  return <p>I am one line, so I do not need the parentheses</p>;
 }
 
 const Photo = () => {
@@ -322,7 +322,7 @@ const Table = () => (
 function ParentComponent() {
   return (
     <main>
-      <PlainDiv />
+      <PlainParagraph />
       <Photo />
       <Table />
     </main>
@@ -372,14 +372,14 @@ JavaScript and turn into things like `React.createElement` thanks to Babel.
 
 ## Resources
 
-- [React Docs: JSX](https://reactjs.org/docs/introducing-jsx.html)
+- [React Docs: JSX](https://react.dev/learn/writing-markup-with-jsx)
 - [Expressions vs Statements][expressions vs statements]
 
 [js xml]: https://facebook.github.io/jsx/
 [babel repl]: https://babeljs.io/en/repl
-[frag]: https://reactjs.org/docs/fragments.html
+[frag]: https://react.dev/reference/react/Fragment
 [expressions vs statements]:
   https://2ality.com/2012/09/expressions-vs-statements.html
 [classname vs class]:
   https://github.com/facebook/react/issues/13525#issuecomment-417818906
-[elements in react]: https://reactjs.org/docs/dom-elements.html
+[elements in react]: https://react.dev/reference/react-dom/components/common
