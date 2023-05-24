@@ -372,14 +372,14 @@ JavaScript and turn into things like `React.createElement` thanks to Babel.
 
 ## Resources
 
-- [React Docs: JSX](https://reactjs.org/docs/introducing-jsx.html)
+- [React Docs: JSX](https://react.dev/learn/writing-markup-with-jsx)
 - [Expressions vs Statements][expressions vs statements]
 
 [js xml]: https://facebook.github.io/jsx/
 [babel repl]: https://babeljs.io/en/repl
-[frag]: https://reactjs.org/docs/fragments.html
+[frag]: https://react.dev/reference/react/Fragment
 [expressions vs statements]:
   https://2ality.com/2012/09/expressions-vs-statements.html
 [classname vs class]:
   https://github.com/facebook/react/issues/13525#issuecomment-417818906
-[elements in react]: https://reactjs.org/docs/dom-elements.html
+[elements in react]: https://react.dev/reference/react-dom/components/common
